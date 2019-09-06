@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Night Patrol</string>
+    <string name="app_name">Vinnies Night Patrol</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="title_activity_landing_screen">Yeetus the Feetus</string>
 </resources>
