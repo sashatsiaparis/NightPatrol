@@ -37,9 +37,13 @@ public class LandingScreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_availability:
+                        Intent intentAvailaibility = new Intent(LandingScreen.this, AvailabilityScreen.class);
+                        startActivity(intentAvailaibility);
                         break;
 
                     case R.id.nav_contacts:
+                        Intent intentContacts = new Intent(LandingScreen.this, AvailabilityScreen.class);
+                        startActivity(intentContacts);
                         break;
 
                 }
