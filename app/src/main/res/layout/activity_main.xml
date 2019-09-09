@@ -20,9 +20,10 @@ tools:context=".MainActivity">
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/loginView"
         app:layout_constraintEnd_toStartOf="@+id/textGuidline2"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textGuidline"
-        app:layout_constraintTop_toTopOf="@+id/emailText" />
+        app:layout_constraintTop_toTopOf="@+id/emailText"
+        app:layout_constraintVertical_bias="0.334" />
 
     <View
         android:id="@+id/displayView"
@@ -31,8 +32,10 @@ tools:context=".MainActivity">
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/displayGuideline"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/loginView"
@@ -87,9 +90,10 @@ tools:context=".MainActivity">
         android:text="@string/email_address"
         app:layout_constraintBottom_toTopOf="@+id/loginView"
         app:layout_constraintEnd_toStartOf="@+id/textGuidline2"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textGuidline"
-        app:layout_constraintTop_toBottomOf="@+id/displayView" />
+        app:layout_constraintTop_toBottomOf="@+id/displayView"
+        app:layout_constraintVertical_bias="0.338" />
 
     <TextView
         android:id="@+id/textView"
@@ -101,6 +105,7 @@ tools:context=".MainActivity">
         android:text="@string/login"
         android:textColor="@android:color/white"
         android:textSize="30sp"
+        android:fontFamily="@font/din_font_main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/loginView"
         app:layout_constraintStart_toStartOf="@+id/loginView"
@@ -111,14 +116,18 @@ tools:context=".MainActivity">
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/din_font_main"
         android:text="@string/app_name"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/displayGuideline"
+        app:layout_constraintEnd_toEndOf="@+id/displayView"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="@+id/displayView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.767" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

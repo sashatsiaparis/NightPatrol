@@ -4,4 +4,5 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="title_activity_landing_screen">Yeetus the Feetus</string>
+    <string name="display_name">Welcome: </string>
 </resources>
