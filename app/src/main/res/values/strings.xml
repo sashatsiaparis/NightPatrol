@@ -4,4 +4,19 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="title_activity_landing_screen">Yeetus the Feetus</string>
+    <string name="display_name">Welcome: </string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_availability">Availability</string>
+    <string name="bottom_nav_contacts">Contacts</string>
+    <string name="upcoming_shifts">Upcoming Shifts: </string>
+    <string name="title_activity_availability_screen">AvailabilityScreen</string>
+    <string name="availability">Availability </string>
+    <string name="monday">Monday </string>
+    <string name="tuesday">Tuesday </string>
+    <string name="wednesday">Wednesday </string>
+    <string name="thursday">Thursday </string>
+    <string name="friday">Friday </string>
+    <string name="saturday">Saturday </string>
+    <string name="sunday">Sunday </string>
+    <string name="save">Save</string>
 </resources>
