@@ -18,6 +18,7 @@ tools:context=".MainActivity">
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:text="@string/password"
         app:layout_constraintBottom_toTopOf="@+id/loginView"
         app:layout_constraintEnd_toStartOf="@+id/textGuidline2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -112,22 +113,17 @@ tools:context=".MainActivity">
         app:layout_constraintTop_toTopOf="@+id/loginView"
         />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:fontFamily="@font/din_font_main"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="36sp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="329dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/displayGuideline"
         app:layout_constraintEnd_toEndOf="@+id/displayView"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintStart_toStartOf="@+id/displayView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textGuidline"
+        app:layout_constraintTop_toTopOf="@+id/displayView"
+        app:srcCompat="@mipmap/vinnies_transparent_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
