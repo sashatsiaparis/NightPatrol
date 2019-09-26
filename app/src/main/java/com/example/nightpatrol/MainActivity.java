@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.nightpatrol.api.model.Login;
 import com.example.nightpatrol.api.model.User;
 import com.example.nightpatrol.api.service.UserClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,9 +24,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
+
     Retrofit.Builder builder = new Retrofit.Builder()
             .baseUrl("https://us-central1-vinnies-api-staging.cloudfunctions.net/api/")
-            .addConverterFactory(GsonConverterFactory.create());
+            .addConverterFactory(GsonConverterFactory.create(gson));
 
     Retrofit retrofit = builder.build();
 
@@ -30,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText email;
     EditText password;
-
-    String inputEmail;
-    String inputPassword;
+    private static final String TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,19 +66,31 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
 
-                        Log.d("JARRADFYCJS", response.toString());
 
-                        /*Intent intent = new Intent(v.getContext(), LandingScreen.class);
-                        #startActivity(intent);*/
+                        Toast.makeText(MainActivity.this, "we good", Toast.LENGTH_SHORT).show();
+
+                        User token = new User();
+                        token.setToken(response.body().toString());
+                        Log.e("JARRADFYCJS", token.getToken());
+//                        Intent intent = new Intent(v.getContext(), LandingScreen.class);
+//                        startActivity(intent);
                     }
                     else {
+                        Log.e(TAG,"help me incorrect");
                         Toast.makeText(MainActivity.this, "incorrect login", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+                    if( t instanceof IOException) {
+                        Toast.makeText(MainActivity.this, "this is an actual network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,"help",t);
+
+                    } else {
+                        Toast.makeText(MainActivity.this, "conversion issue", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,"help me more",t);
+                    }
                 }
             });
 

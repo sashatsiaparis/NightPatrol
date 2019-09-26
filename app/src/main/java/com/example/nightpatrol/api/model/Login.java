@@ -1,6 +1,16 @@
 package com.example.nightpatrol.api.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Login {
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("password")
+    @Expose
+    private String password;
+
     public String getEmail() {
         return email;
     }
@@ -17,15 +27,11 @@ public class Login {
         this.password = password;
     }
 
-    public Login(String iemail, String ipassword) {
-        this.email = iemail;
-        this.password = ipassword;
-    }
+//    public Login(String iemail, String ipassword) {
+//        this.email = iemail;
+//        this.password = ipassword;
+//    }
 
     public Login() {
     }
-
-    private String email;
-    private String password;
-
 }

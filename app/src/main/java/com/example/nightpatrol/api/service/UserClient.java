@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface UserClient {
-    @GET("/auth")
-    Call<User> getUser(@Query("page") String email,
-                       @Query("order") String password);
+    @GET("auth")
+    Call<User> getUser(@Query("email") String email,
+                       @Query("password") String password);
 }
