@@ -1,14 +1,13 @@
 package com.example.nightpatrol.api.service;
 
-import com.example.nightpatrol.api.model.Login;
 import com.example.nightpatrol.api.model.User;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface UserClient {
-    @GET("auth")
-    Call<User>
+    @GET("/auth")
+    Call<User> getUser(@Query("page") String email,
+                       @Query("order") String password);
 }

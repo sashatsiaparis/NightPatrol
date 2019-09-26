@@ -1,13 +1,13 @@
 package com.example.nightpatrol.api.model;
 
 public class User {
-    private String token;
-
     public String getToken() {
         return token;
     }
 
-    public void setToken(String Token) {
+    public void setToken(String token) {
         this.token = token;
     }
+
+    private String token;
 }
