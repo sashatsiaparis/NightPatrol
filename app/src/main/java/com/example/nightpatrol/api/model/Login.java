@@ -27,11 +27,6 @@ public class Login {
         this.password = password;
     }
 
-//    public Login(String iemail, String ipassword) {
-//        this.email = iemail;
-//        this.password = ipassword;
-//    }
-
     public Login() {
     }
 }

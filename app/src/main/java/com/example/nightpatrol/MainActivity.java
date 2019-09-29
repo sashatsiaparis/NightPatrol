@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nightpatrol.api.model.Login;
 import com.example.nightpatrol.api.model.User;
-import com.example.nightpatrol.api.service.UserClient;
+import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     Retrofit retrofit = builder.build();
 
-    UserClient userClient = retrofit.create(UserClient.class);
+    ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
     EditText email;
     EditText password;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             login.setEmail(email.getText().toString());
             login.setPassword(password.getText().toString());
 
-            Call<User> call = userClient.getUser(login.getEmail(), login.getPassword());
+            Call<User> call = apiInterface.getUser(login.getEmail(), login.getPassword());
 
             call.enqueue(new Callback<User>() {
                 @Override
