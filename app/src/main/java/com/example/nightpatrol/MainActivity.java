@@ -1,5 +1,6 @@
 package com.example.nightpatrol;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,24 +72,24 @@ public class MainActivity extends AppCompatActivity {
 
                         User token = new User();
                         token.setToken(response.body().toString());
-                        Log.e("JARRADFYCJS", token.getToken());
-//                        Intent intent = new Intent(v.getContext(), LandingScreen.class);
-//                        startActivity(intent);
+                        Log.e("Response Successful", token.getToken());
+                        Intent intent = new Intent(v.getContext(), LandingScreen.class);
+                        startActivity(intent);
                     }
                     else {
-                        Log.e(TAG,"help me incorrect");
-                        Toast.makeText(MainActivity.this, "incorrect login", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,"Incorrect Login");
+                        Toast.makeText(MainActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     if( t instanceof IOException) {
-                        Toast.makeText(MainActivity.this, "this is an actual network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "This is an actual network failure, please contact the developer.", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,"help",t);
 
                     } else {
-                        Toast.makeText(MainActivity.this, "conversion issue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,"help me more",t);
                     }
                 }

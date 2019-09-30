@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -20,27 +22,36 @@ public class LandingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        Button buttonPass = findViewById(R.id.buttonPass);
-        TextView shiftText = findViewById(R.id.shiftsText);
+        ShiftData[] shiftData = new ShiftData[]{
+                new ShiftData("March 1st","Northside","17:30","Team 03"),
+                new ShiftData("March 22nd","Southside","21:30","Team 01"),
+                new ShiftData("April 1st","Northside","17:30","Team 03"),
+                new ShiftData("April 22nd","Southside","21:30","Team 01"),
+                new ShiftData("May 1st","Southside","19:00","Team 01")
+        };
 
-        buttonPass.setOnClickListener(buttonPassListener);
+
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        ShiftAdapter adapter = new ShiftAdapter(shiftData);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()) {
+                switch (menuItem.getItemId()) {
                     case R.id.nav_home:
 
                         break;
 
                     case R.id.nav_availability:
-                        Intent intentAvailaibility = new Intent(LandingScreen.this, AvailabilityScreen.class);
-                        startActivity(intentAvailaibility);
+                        Intent intentAvailability = new Intent(LandingScreen.this, AvailabilityScreen.class);
+                        startActivity(intentAvailability);
                         break;
 
                     case R.id.nav_contacts:
@@ -53,26 +64,12 @@ public class LandingScreen extends AppCompatActivity {
             }
         });
 
-        if(getIntent() != null) {
 
-            boolean isChecked1 = getIntent().getBooleanExtra("switch1", false);
-            boolean isChecked2 = getIntent().getBooleanExtra("switch2", false);
-            boolean isChecked3 = getIntent().getBooleanExtra("switch3", false);
-            boolean isChecked4 = getIntent().getBooleanExtra("switch4", false);
-            boolean isChecked5 = getIntent().getBooleanExtra("switch5", false);
-            boolean isChecked6 = getIntent().getBooleanExtra("switch6", false);
-            boolean isChecked7 = getIntent().getBooleanExtra("switch7", false);
-
-            shiftText.append(isChecked1 + " " + isChecked2 + " " + isChecked3 + " " + isChecked4 + " " + isChecked5 + " " + isChecked6 + " " + isChecked7);
-        }
+//        TextView textView3 = findViewById(R.id.textView3);
+//        String nameString = getIntent().getStringExtra("tempname");
+//        textView3.append(nameString);
 
     }
-
-    private View.OnClickListener buttonPassListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), AvailabilityScreen.class);
-            startActivity(intent);
-        }
-    };
 }
+
 

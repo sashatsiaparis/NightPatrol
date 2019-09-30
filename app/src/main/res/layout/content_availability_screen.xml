@@ -336,34 +336,29 @@
         android:layout_marginBottom="8dp"
         android:text="@string/availability"
         android:textColor="@color/colorPrimary"
-        android:textSize="36sp"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textGuideline"
         app:layout_constraintEnd_toStartOf="@+id/daysGuideline2"
         app:layout_constraintStart_toStartOf="@+id/daysGuideline"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/saveView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/saveGuidline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/saveGuideline" />
-
-    <TextView
-        android:id="@+id/textSaveView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="@string/save"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/saveView"
-        app:layout_constraintEnd_toEndOf="@+id/saveView"
-        app:layout_constraintStart_toStartOf="@+id/saveView"
-        app:layout_constraintTop_toTopOf="@+id/saveView" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Save"
+        android:background="@drawable/btn_rounded"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@+id/saveGuidline2"
+        app:layout_constraintEnd_toStartOf="@+id/daysGuideline2"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="@+id/saveGuideline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
