@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
 
-                        Toast.makeText(MainActivity.this, "we good", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                         User token = new User();
                         token.setToken(response.body().toString());
