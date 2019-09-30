@@ -3,13 +3,16 @@ package com.example.nightpatrol;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
 
@@ -20,8 +23,8 @@ public class AvailabilityScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         sw1 = findViewById(R.id.switchMonday);
         sw2 = findViewById(R.id.switchTuesday);
@@ -31,9 +34,30 @@ public class AvailabilityScreen extends AppCompatActivity {
         sw6 = findViewById(R.id.switchSaturday);
         sw7 = findViewById(R.id.switchSunday);
 
-        View viewSave = findViewById(R.id.saveView);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
-        viewSave.setOnClickListener(saveViewListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intentAvailability = new Intent(AvailabilityScreen.this, LandingScreen.class);
+                        startActivity(intentAvailability);
+                        break;
+
+                    case R.id.nav_availability:
+
+                        break;
+
+                    case R.id.nav_contacts:
+                        Intent intentContacts = new Intent(AvailabilityScreen.this, AvailabilityScreen.class);
+                        startActivity(intentContacts);
+                        break;
+
+                }
+                return false;
+            }
+        });
     }
 
     private View.OnClickListener saveViewListener = new View.OnClickListener() {
