@@ -50,7 +50,7 @@ public class AvailabilityScreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_contacts:
-                        Intent intentContacts = new Intent(AvailabilityScreen.this, AvailabilityScreen.class);
+                        Intent intentContacts = new Intent(AvailabilityScreen.this, ContactUs.class);
                         startActivity(intentContacts);
                         break;
 

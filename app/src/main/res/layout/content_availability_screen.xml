@@ -225,7 +225,7 @@
         app:layout_constraintTop_toTopOf="@+id/mondayGuideline" />
 
     <TextView
-        android:id="@+id/textMonday"
+        android:id="@+id/textLeaderNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -325,7 +325,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <TextView
-        android:id="@+id/availabilityText"
+        android:id="@+id/contactUsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

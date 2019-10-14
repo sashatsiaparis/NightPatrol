@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ContactUs"
+    tools:showIn="@layout/activity_contact_us">
+
+    <TextView
+        android:id="@+id/textLeaderNo3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:text="@string/leader_phone"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintTop_toBottomOf="@+id/textLeader6" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/checkGuidline"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="@+id/mondayGuideline"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/checkGuidline"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="@+id/wednesdayGuideline"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/checkGuidline"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="@+id/thursdayGuideline"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <TextView
+        android:id="@+id/textLeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:text="Bryce"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toTopOf="@+id/mondayGuideline" />
+
+    <TextView
+        android:id="@+id/textLeader3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:text="@string/team_leader"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toTopOf="@+id/wednesdayGuideline" />
+
+    <TextView
+        android:id="@+id/textLeader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:text="Bryce Email"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toTopOf="@+id/tuesdayGuideline" />
+
+    <TextView
+        android:id="@+id/textLeader4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:text="@string/team_leader"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toTopOf="@+id/thursdayGuideline" />
+
+    <TextView
+        android:id="@+id/textLeader6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:text="@string/team_leader"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toTopOf="@+id/textGuideline" />
+
+    <TextView
+        android:id="@+id/textLeaderNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/d_dincondensed_bold_otf"
+        android:maxLines="1"
+        android:text="@string/leader_email"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/mondayGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/daysGuideline2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/textLeaderNo3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/textGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/saveGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mondayGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.32" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/tuesdayGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/wednesdayGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/thursdayGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fridayGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/checkGuidline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/daysGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/daysGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <TextView
+        android:id="@+id/contactUsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/title_activity_contact_us"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/daysGuideline2"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="39dp"
+        android:layout_height="41dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toBottomOf="@+id/imageView12"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="39dp"
+        android:layout_height="41dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintStart_toStartOf="@+id/checkGuidline"
+        app:layout_constraintTop_toBottomOf="@+id/textLeader6"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="@+id/tuesdayGuideline"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_perm_contact_calendar_black_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/checkGuidline"
+        app:layout_constraintStart_toStartOf="@+id/daysGuideline"
+        app:layout_constraintTop_toTopOf="@+id/textGuideline"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        tools:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
