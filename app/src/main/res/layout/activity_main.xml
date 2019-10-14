@@ -17,13 +17,16 @@ tools:context=".MainActivity">
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/loginView"
         app:layout_constraintEnd_toStartOf="@+id/textGuidline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textGuidline"
         app:layout_constraintTop_toTopOf="@+id/emailText"
-        app:layout_constraintVertical_bias="0.334" />
+        app:layout_constraintVertical_bias="0.334"
+        android:imeOptions="actionDone"
+        />
 
     <View
         android:id="@+id/displayView"
@@ -44,15 +47,17 @@ tools:context=".MainActivity">
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/loginGuideline" />
+        app:layout_constraintTop_toTopOf="@+id/loginGuideline"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/displayGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.20109439" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/textGuidline"
@@ -73,7 +78,7 @@ tools:context=".MainActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <EditText
         android:id="@+id/emailText"
@@ -86,8 +91,8 @@ tools:context=".MainActivity">
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="@string/email_address"
         android:inputType="textWebEmailAddress"
-        android:text="@string/email_address"
         app:layout_constraintBottom_toTopOf="@+id/loginView"
         app:layout_constraintEnd_toStartOf="@+id/textGuidline2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -112,22 +117,17 @@ tools:context=".MainActivity">
         app:layout_constraintTop_toTopOf="@+id/loginView"
         />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:fontFamily="@font/din_font_main"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="36sp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="329dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/displayGuideline"
         app:layout_constraintEnd_toEndOf="@+id/displayView"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintStart_toStartOf="@+id/displayView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textGuidline"
+        app:layout_constraintTop_toTopOf="@+id/displayView"
+        app:srcCompat="@mipmap/vinnies_transparent_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
