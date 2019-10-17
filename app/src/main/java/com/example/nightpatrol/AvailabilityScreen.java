@@ -19,12 +19,16 @@ import android.widget.Switch;
 public class AvailabilityScreen extends AppCompatActivity {
     Switch sw1, sw2, sw3, sw4, sw5, sw6, sw7;
 
+    String mTOKEN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability_screen);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
+        mTOKEN = getIntent().getStringExtra("token");
 
         sw1 = findViewById(R.id.switchMonday);
         sw2 = findViewById(R.id.switchTuesday);
@@ -42,6 +46,7 @@ public class AvailabilityScreen extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         Intent intentAvailability = new Intent(AvailabilityScreen.this, LandingScreen.class);
+                        intentAvailability.putExtra("token", mTOKEN);
                         startActivity(intentAvailability);
                         break;
 
@@ -51,6 +56,7 @@ public class AvailabilityScreen extends AppCompatActivity {
 
                     case R.id.nav_contacts:
                         Intent intentContacts = new Intent(AvailabilityScreen.this, ContactUs.class);
+                        intentContacts.putExtra("token", mTOKEN);
                         startActivity(intentContacts);
                         break;
 
