@@ -86,31 +86,9 @@ public class LandingScreen extends AppCompatActivity {
 
 
         requestShifts();
-
-
-
-
-
-
-
-        //adapter = new ShiftAdapter();
-
-
-        //recyclerView.setAdapter(adapter);
-
-
-
-        //Toast.makeText(LandingScreen.this, token, Toast.LENGTH_SHORT).show();
-
-//        TextView textView3 = findViewById(R.id.textView3);
-//        String nameString = getIntent().getStringExtra("tempname");
-//        textView3.append(nameString);
-
     }
 
-
     private void requestShifts() {
-
 
         Interceptor authInterception = new Interceptor() {
             @Override

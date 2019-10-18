@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             login.setEmail(inputEmail.getText().toString());
             login.setPassword(inputPassword.getText().toString());
 
-
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -91,12 +90,10 @@ public class MainActivity extends AppCompatActivity {
                             final EditText input = new EditText(MainActivity.this);
                             input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("Temp Password")
                                     .setMessage("yah")
                                     .setView(input)
-
 
                                     // Specifying a listener allows you to take an action before dismissing the dialog.
                                     // The dialog is automatically dismissed when a dialog button is clicked.
@@ -111,11 +108,9 @@ public class MainActivity extends AppCompatActivity {
                                                 }
                                             };
 
-// Add the interceptor to OkHttpClient
                                             OkHttpClient.Builder builder = new OkHttpClient.Builder();
                                             builder.interceptors().add(interceptor);
                                             OkHttpClient client = builder.build();
-
 
                                             Retrofit builder2 = new Retrofit.Builder()
                                                     .baseUrl(BASE_URL)
