@@ -87,4 +87,6 @@ public class CurrentUser {
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
     }
+
+
 }

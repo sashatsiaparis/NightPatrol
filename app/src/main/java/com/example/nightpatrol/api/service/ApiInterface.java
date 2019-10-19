@@ -34,15 +34,8 @@ public interface ApiInterface {
     Call<PasswordChange> postPassword(
             @Body PasswordChange body);
 
-    @FormUrlEncoded
     @PUT("users/id/{id}/schedule")
     Call<Schedule> setSchedule(
             @Path("id") String id,
-            @Field("monday") boolean monday,
-            @Field("tuesday") boolean tuesday,
-            @Field("wednesday") boolean wednesday,
-            @Field("thursday") boolean thursday,
-            @Field("friday") boolean friday,
-            @Field("saturday") boolean saturday,
-            @Field("sunday") boolean sunday);
+            @Body Schedule body);
 }

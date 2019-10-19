@@ -131,12 +131,14 @@ public class AvailabilityScreen extends AppCompatActivity {
                 thursday = response.body().getSchedule().getThursday();
                 friday = response.body().getSchedule().getFriday();
                 saturday = response.body().getSchedule().getSaturday();
+                sunday = response.body().getSchedule().getSunday();
 
                 id = response.body().getId();
 
                 if (statusCode == 200) {
                     Log.d(TAG, Integer.toString(statusCode));
                     Log.d(TAG, id);
+
                     switchMonday.setChecked(monday);
                     switchTuesday.setChecked(tuesday);
                     switchWednesday.setChecked(wednesday);
@@ -183,7 +185,8 @@ public class AvailabilityScreen extends AppCompatActivity {
 
                 ApiInterface apiInterface = build.create(ApiInterface.class);
 
-                Call<Schedule> call = apiInterface.setSchedule(id,  switchMonday.isChecked(), switchTuesday.isChecked(), switchWednesday.isChecked(), switchThursday.isChecked(), switchFriday.isChecked(), switchSaturday.isChecked(), switchSunday.isChecked());
+                Call<Schedule> call = apiInterface.setSchedule(id, new Schedule(switchMonday.isChecked(), switchTuesday.isChecked(), switchWednesday.isChecked(),
+                        switchThursday.isChecked(), switchFriday.isChecked(), switchSaturday.isChecked(), switchSunday.isChecked()));
 
                 call.enqueue(new Callback<Schedule>() {
                     @Override

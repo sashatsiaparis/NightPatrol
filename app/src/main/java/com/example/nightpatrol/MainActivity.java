@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nightpatrol.api.model.Login;
 import com.example.nightpatrol.api.model.PasswordChange;
+import com.example.nightpatrol.api.model.Schedule;
 import com.example.nightpatrol.api.model.User;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.gson.Gson;

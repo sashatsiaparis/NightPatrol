@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Schedule {
+
     @SerializedName("monday")
     @Expose
     private Boolean monday;
@@ -85,6 +86,17 @@ public class Schedule {
     }
 
     public void setSunday(Boolean sunday) {
+        this.sunday = sunday;
+    }
+
+    public Schedule(Boolean monday, Boolean tuesday, Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
+
+        this.monday = monday;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+        this.saturday = saturday;
         this.sunday = sunday;
     }
 }
