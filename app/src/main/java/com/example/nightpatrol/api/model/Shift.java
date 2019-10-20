@@ -52,4 +52,14 @@ public class Shift {
     @Expose
     private float location;
 
+    private boolean expanded;
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
 }

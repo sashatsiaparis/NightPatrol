@@ -89,6 +89,8 @@ public class AvailabilityScreen extends AppCompatActivity {
             }
         });
 
+
+
         getAvailability();
         saveSchedule();
 
@@ -147,6 +149,10 @@ public class AvailabilityScreen extends AppCompatActivity {
                     switchSaturday.setChecked(saturday);
                     switchSunday.setChecked(sunday);
 
+                    String test = switchThursday.isChecked() + " " + switchSunday.isChecked() + " " + switchMonday.isChecked() + " ";
+
+                    Log.d(TAG, test);
+
                 }
 
             }
@@ -159,6 +165,10 @@ public class AvailabilityScreen extends AppCompatActivity {
                 Log.d(TAG, t.toString());
             }
         });
+
+        String test = switchThursday.isChecked() + " " + switchSunday.isChecked() + " " + switchMonday.isChecked() + " ";
+
+        Log.d(TAG, test);
     }
 
     private void saveSchedule() {
@@ -173,6 +183,11 @@ public class AvailabilityScreen extends AppCompatActivity {
                     }
                 };
 
+
+                String test = switchThursday.isChecked() + " " + switchSunday.isChecked() + " " + switchMonday.isChecked() + " ";
+
+                Log.d(TAG, test);
+
                 OkHttpClient.Builder builder = new OkHttpClient.Builder();
                 builder.interceptors().add(authInterception);
                 OkHttpClient client = builder.build();
@@ -185,7 +200,7 @@ public class AvailabilityScreen extends AppCompatActivity {
 
                 ApiInterface apiInterface = build.create(ApiInterface.class);
 
-                Call<Schedule> call = apiInterface.setSchedule(id, new Schedule(switchMonday.isChecked(), switchTuesday.isChecked(), switchWednesday.isChecked(),
+                Call<Schedule> call = apiInterface.setSchedule(new Schedule(switchMonday.isChecked(), switchTuesday.isChecked(), switchWednesday.isChecked(),
                         switchThursday.isChecked(), switchFriday.isChecked(), switchSaturday.isChecked(), switchSunday.isChecked()));
 
                 call.enqueue(new Callback<Schedule>() {

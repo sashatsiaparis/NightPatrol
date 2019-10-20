@@ -90,7 +90,6 @@ public class Schedule {
     }
 
     public Schedule(Boolean monday, Boolean tuesday, Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
-
         this.monday = monday;
         this.tuesday = tuesday;
         this.wednesday = wednesday;

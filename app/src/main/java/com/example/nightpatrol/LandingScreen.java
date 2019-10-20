@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
@@ -50,6 +51,7 @@ public class LandingScreen extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
+
         mTOKEN = getIntent().getStringExtra("token");
 
 
@@ -81,11 +83,14 @@ public class LandingScreen extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.recyclerView);
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         requestShifts();
+
+
     }
 
     private void requestShifts() {
@@ -127,6 +132,12 @@ public class LandingScreen extends AppCompatActivity {
                     adapter = new ShiftAdapter(shifts_list);
                     recyclerView.setAdapter(adapter);
 
+                    adapter.setOnItemClickListener(new ShiftAdapter.OnItemClickListener() {
+                        @Override
+                        public void onDeleteClick(int position) {
+                            Log.e(TAG,position + "");
+                        }
+                    });
 
                 }
 
@@ -145,7 +156,6 @@ public class LandingScreen extends AppCompatActivity {
 
 
     }
-
 
     //ShiftData[] shiftData = new ShiftData[]{
     //        new ShiftData("March 1st","Northside","17:30","Team 03"),
