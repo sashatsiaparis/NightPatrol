@@ -183,7 +183,6 @@ public class AvailabilityScreen extends AppCompatActivity {
                     }
                 };
 
-
                 String test = switchThursday.isChecked() + " " + switchSunday.isChecked() + " " + switchMonday.isChecked() + " ";
 
                 Log.d(TAG, test);

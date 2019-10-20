@@ -61,10 +61,10 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/teamIDText"
+                    android:id="@+id/shiftIDText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="teamid"
+                    android:text="shiftid"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="13sp" />
 

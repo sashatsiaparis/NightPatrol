@@ -4,6 +4,7 @@ import com.example.nightpatrol.api.model.CurrentUser;
 import com.example.nightpatrol.api.model.PasswordChange;
 import com.example.nightpatrol.api.model.Schedule;
 import com.example.nightpatrol.api.model.Shift;
+import com.example.nightpatrol.api.model.ShiftID;
 import com.example.nightpatrol.api.model.User;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -46,6 +48,6 @@ public interface ApiInterface {
 
     //Call to cancel an assigned shift.
     @POST("shifts/{id}/cancel")
-    Call<Schedule> cancelShift(
+    Call<String> cancelShift(
             @Path("id") String id);
 }

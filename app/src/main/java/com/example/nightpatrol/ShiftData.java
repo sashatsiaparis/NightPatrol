@@ -5,15 +5,15 @@ public class ShiftData {
     private String date;
     private String van;
     private String time;
-    private String teamID;
+    private String shiftID;
 
 
 
-    public ShiftData(String date, String van, String time, String teamID) {
+    public ShiftData(String date, String van, String time, String shiftID) {
         this.date = date;
         this.time = time;
         this.van = van;
-        this.teamID = teamID;
+        this.shiftID = shiftID;
 
     }
 
@@ -41,10 +41,10 @@ public class ShiftData {
     }
 
     public String getTeamID() {
-        return teamID;
+        return shiftID;
     }
 
     public void setTeamID(String teamID) {
-        this.teamID = teamID;
+        this.shiftID = teamID;
     }
 }
