@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
@@ -100,7 +100,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/sub_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -111,14 +111,18 @@
             android:id="@+id/sub_item_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:text="yeet/delete" />
 
         <Button
             android:id="@+id/sub_item_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:text="no yeet/cancel" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -130,4 +130,5 @@ tools:context=".MainActivity">
         app:layout_constraintTop_toTopOf="@+id/displayView"
         app:srcCompat="@mipmap/vinnies_transparent_logo" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

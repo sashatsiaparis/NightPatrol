@@ -23,4 +23,9 @@
     <string name="team_leader">Team Leader</string>
     <string name="leader_phone">0423 066 227</string>
     <string name="leader_email">team.leader@vinnies.com</string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
+    <string name="passwordHelp">Please enter your new password.</string>
+    <string name="change_password">Please enter 6 or more characters. Password must contain numeric and alphabetic characters.</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="change_password_title">Change Password</string>
 </resources>
