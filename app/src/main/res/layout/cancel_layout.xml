@@ -41,7 +41,7 @@
                 android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/change_password_title"
+                android:text="@string/cancel_shift"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -50,36 +50,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@string/change_password" />
+                android:text="@string/cancel_dialogue" />
 
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <EditText
-            android:id="@+id/password1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/password2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword" />
 
     </LinearLayout>
 
@@ -87,7 +61,7 @@
         android:id="@+id/sub_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_weight="80"
         android:orientation="horizontal">
 
@@ -97,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_rounded"
-            android:text="Save"
+            android:background="@android:color/holo_red_dark"
+            android:text="Remove"
             android:textColor="#FDFDFE" />
 
         <Button

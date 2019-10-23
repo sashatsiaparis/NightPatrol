@@ -5,26 +5,19 @@ import android.os.Bundle;
 
 import com.example.nightpatrol.api.model.CurrentUser;
 import com.example.nightpatrol.api.model.Schedule;
-import com.example.nightpatrol.api.model.Shift;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.TabHost;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -44,6 +37,7 @@ public class AvailabilityScreen extends AppCompatActivity {
     private String TAG = "Jarrad sucks";
     public Button saveButton;
     public String id;
+    public String contactId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +45,8 @@ public class AvailabilityScreen extends AppCompatActivity {
         setContentView(R.layout.activity_availability_screen);
 
         mTOKEN = getIntent().getStringExtra("token");
+        contactId = getIntent().getStringExtra("id");
+
 
         switchMonday = findViewById(R.id.switchMonday);
         switchTuesday = findViewById(R.id.switchTuesday);
@@ -60,7 +56,7 @@ public class AvailabilityScreen extends AppCompatActivity {
         switchSaturday = findViewById(R.id.switchSaturday);
         switchSunday = findViewById(R.id.switchSunday);
 
-        saveButton = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.deleteButton);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
@@ -81,6 +77,7 @@ public class AvailabilityScreen extends AppCompatActivity {
                     case R.id.nav_contacts:
                         Intent intentContacts = new Intent(AvailabilityScreen.this, ContactUs.class);
                         intentContacts.putExtra("token", mTOKEN);
+                        intentContacts.putExtra("id", contactId);
                         startActivity(intentContacts);
                         break;
 

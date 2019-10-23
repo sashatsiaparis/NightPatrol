@@ -1,38 +1,29 @@
 package com.example.nightpatrol;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nightpatrol.api.model.Login;
 import com.example.nightpatrol.api.model.PasswordChange;
-import com.example.nightpatrol.api.model.Schedule;
 import com.example.nightpatrol.api.model.User;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                             View mView = getLayoutInflater().inflate(R.layout.dialog_layout, null);
                             final EditText mPassword1 = (EditText) mView.findViewById(R.id.password1);
                             final EditText mPassword2 = (EditText) mView.findViewById(R.id.password2);
-                            Button mSave = (Button) mView.findViewById(R.id.saveButton);
+                            Button mSave = (Button) mView.findViewById(R.id.deleteButton);
                             Button mCancel = (Button) mView.findViewById(R.id.cancelButton);
 
                             mBuilder.setView(mView);

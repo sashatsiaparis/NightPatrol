@@ -4,7 +4,7 @@ import com.example.nightpatrol.api.model.CurrentUser;
 import com.example.nightpatrol.api.model.PasswordChange;
 import com.example.nightpatrol.api.model.Schedule;
 import com.example.nightpatrol.api.model.Shift;
-import com.example.nightpatrol.api.model.ShiftID;
+import com.example.nightpatrol.api.model.ShiftDetails;
 import com.example.nightpatrol.api.model.User;
 
 import java.util.List;
@@ -49,5 +49,10 @@ public interface ApiInterface {
     //Call to cancel an assigned shift.
     @POST("shifts/{id}/cancel")
     Call<String> cancelShift(
+            @Path("id") String id);
+
+    //Get a team leader
+    @GET("shifts/{id}")
+    Call<ShiftDetails> getShiftDetails(
             @Path("id") String id);
 }

@@ -1,48 +1,33 @@
 package com.example.nightpatrol;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nightpatrol.api.model.PasswordChange;
-import com.example.nightpatrol.api.model.Schedule;
 import com.example.nightpatrol.api.model.Shift;
-import com.example.nightpatrol.api.model.ShiftID;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +41,7 @@ public class LandingScreen extends AppCompatActivity {
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
     private String TAG = "Jarrad sucks";
+    private String contactId;
 
 
     @Override
@@ -66,6 +52,7 @@ public class LandingScreen extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
         mTOKEN = getIntent().getStringExtra("token");
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,12 +65,14 @@ public class LandingScreen extends AppCompatActivity {
                     case R.id.nav_availability:
                         Intent intentAvailability = new Intent(LandingScreen.this, AvailabilityScreen.class);
                         intentAvailability.putExtra("token", mTOKEN);
+                        intentAvailability.putExtra("id", contactId);
                         startActivity(intentAvailability);
                         break;
 
                     case R.id.nav_contacts:
                         Intent intentContacts = new Intent(LandingScreen.this, ContactUs.class);
                         intentContacts.putExtra("token", mTOKEN);
+                        intentContacts.putExtra("id", contactId);
                         startActivity(intentContacts);
                         break;
 
@@ -138,55 +127,86 @@ public class LandingScreen extends AppCompatActivity {
                     adapter = new ShiftAdapter(shifts_list);
                     recyclerView.setAdapter(adapter);
 
+                    setContactId(shifts_list.get(0).getId());
+
                     adapter.setOnItemClickListener(new ShiftAdapter.OnItemClickListener() {
                         @Override
                         public void onDeleteClick(final int position) {
-                            final String shiftID = shifts_list.get(position).getId();
-                            Log.d(TAG, shiftID);
+                            final android.app.AlertDialog.Builder mBuilder = new AlertDialog.Builder(LandingScreen.this);
+                            View mView = getLayoutInflater().inflate(R.layout.cancel_layout, null);
+                            Button mDelete = (Button) mView.findViewById(R.id.deleteButton);
+                            Button mCancel = mView.findViewById(R.id.cancelButton);
 
-                            Interceptor interceptor = new Interceptor() {
+                            mBuilder.setView(mView);
+                            final AlertDialog dialog = mBuilder.create();
+                            dialog.show();
+
+                            mCancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public okhttp3.Response intercept(Chain chain) throws IOException {
-                                    Request newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer " + mTOKEN).build();
-                                    return chain.proceed(newRequest);
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+
                                 }
-                            };
+                            });
 
-                            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-                            builder.interceptors().add(interceptor);
-                            OkHttpClient client = builder.build();
-
-                            Gson gson = new GsonBuilder()
-                                    .setLenient()
-                                    .create();
-
-                            Retrofit builder2 = new Retrofit.Builder()
-                                    .baseUrl(BASE_URL)
-                                    .addConverterFactory(GsonConverterFactory.create(gson))
-                                    .client(client)
-                                    .build();
-
-                            ApiInterface apiService2 = builder2.create(ApiInterface.class);
-
-                            Call<String> shiftIDCall = apiService2.cancelShift(shiftID);
-
-                            shiftIDCall.enqueue(new Callback<String>() {
+                            mDelete.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
+                                public void onClick(View view) {
 
-                                    int statusCode = response.code();
 
-                                    Log.d(TAG, Integer.toString(statusCode));
-                                    Log.d(TAG, response.raw().toString());
+                                    final String shiftID = shifts_list.get(position).getId();
+                                    Log.d(TAG, shiftID);
 
-                                    if (statusCode == 200) {
-                                        Toast.makeText(LandingScreen.this, "You yeeted your shift", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
+                                    Interceptor interceptor = new Interceptor() {
+                                        @Override
+                                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                                            Request newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer " + mTOKEN).build();
+                                            return chain.proceed(newRequest);
+                                        }
+                                    };
 
-                                @Override
-                                public void onFailure(Call<String> call, Throwable t) {
-                                    Log.d(TAG, t.toString());
+                                    OkHttpClient.Builder builder = new OkHttpClient.Builder();
+                                    builder.interceptors().add(interceptor);
+                                    OkHttpClient client = builder.build();
+
+                                    Gson gson = new GsonBuilder()
+                                            .setLenient()
+                                            .create();
+
+                                    Retrofit builder2 = new Retrofit.Builder()
+                                            .baseUrl(BASE_URL)
+                                            .addConverterFactory(GsonConverterFactory.create(gson))
+                                            .client(client)
+                                            .build();
+
+                                    ApiInterface apiService2 = builder2.create(ApiInterface.class);
+
+                                    Call<String> shiftIDCall = apiService2.cancelShift(shiftID);
+
+                                    shiftIDCall.enqueue(new Callback<String>() {
+                                        @Override
+                                        public void onResponse(Call<String> call, Response<String> response) {
+
+                                            int statusCode = response.code();
+
+                                            Log.d(TAG, Integer.toString(statusCode));
+                                            Log.d(TAG, response.raw().toString());
+
+                                            if (statusCode == 200) {
+                                                Toast.makeText(LandingScreen.this, "You removed your shift", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<String> call, Throwable t) {
+                                            Log.d(TAG, t.toString());
+                                        }
+                                    });
+                                    dialog.dismiss();
+                                    finish();
+                                    overridePendingTransition(0, 0);
+                                    startActivity(getIntent());
+                                    overridePendingTransition(0, 0);
                                 }
                             });
                         }
@@ -205,4 +225,9 @@ public class LandingScreen extends AppCompatActivity {
             }
         });
     }
+
+    public void setContactId(String i) {
+        contactId = i;
+    }
+
 }
