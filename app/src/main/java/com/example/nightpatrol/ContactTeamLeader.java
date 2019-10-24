@@ -36,6 +36,8 @@ public class ContactTeamLeader extends AppCompatActivity {
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
     private String shiftID;
+    public String userType;
+
     private String TAG = "Jarrad sucks";
 
     @Override
@@ -47,7 +49,7 @@ public class ContactTeamLeader extends AppCompatActivity {
 
         mTOKEN = getIntent().getStringExtra("token");
         shiftID = getIntent().getStringExtra("id");
-
+        userType =  getIntent().getStringExtra("type");
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -62,6 +64,8 @@ public class ContactTeamLeader extends AppCompatActivity {
                     case R.id.nav_availability:
                         Intent intentAvailability = new Intent(ContactTeamLeader.this, AvailabilityScreen.class);
                         intentAvailability.putExtra("token", mTOKEN);
+                        intentAvailability.putExtra("id", shiftID);
+                        intentAvailability.putExtra("type", userType);
                         startActivity(intentAvailability);
                         break;
 
@@ -115,13 +119,15 @@ public class ContactTeamLeader extends AppCompatActivity {
                 Log.d(TAG, Integer.toString(statusCode));
                 Log.d(TAG, mTOKEN);
 
-
-                final List<ShiftUsers> user_list = response.body().getShiftUsers();
-                
-
                 if (statusCode == 200) {
 
+                    final List<ShiftUsers> user_list = response.body().getShiftUsers();
+
+                    user_list.add(addVinniesContact());
+                    user_list.add(addHelplinet());
+
                     adapter = new ContactAdapter(user_list);
+
                     recyclerView.setAdapter(adapter);
 
                     /*String fullName = response.body().getShiftDriver().getFullName();
@@ -143,6 +149,27 @@ public class ContactTeamLeader extends AppCompatActivity {
 
     }
 
+    public ShiftUsers addVinniesContact() {
+        ShiftUsers vinniesContact = new ShiftUsers();
+
+        vinniesContact.setFirstName("Vinnies");
+        vinniesContact.setLastName("Support Contacts");
+        vinniesContact.setPhone("610382357923");
+        vinniesContact.setEmail("Vinnies@vinnies");
+
+        return vinniesContact;
+    }
+
+    public ShiftUsers addHelplinet() {
+        ShiftUsers helplineContact = new ShiftUsers();
+
+        helplineContact.setFirstName("Helpline");
+        helplineContact.setLastName("Contacts");
+        helplineContact.setPhone("911");
+        helplineContact.setEmail("ACT@Police");
+
+        return helplineContact;
+    }
 }
 
 

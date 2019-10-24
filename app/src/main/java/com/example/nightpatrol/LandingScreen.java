@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.nightpatrol.api.model.CurrentUser;
 import com.example.nightpatrol.api.model.Shift;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,6 +43,7 @@ public class LandingScreen extends AppCompatActivity {
     public String mTOKEN;
     private String TAG = "Jarrad sucks";
     private String contactId;
+    private String userType;
 
 
     @Override
@@ -66,19 +68,27 @@ public class LandingScreen extends AppCompatActivity {
                         Intent intentAvailability = new Intent(LandingScreen.this, AvailabilityScreen.class);
                         intentAvailability.putExtra("token", mTOKEN);
                         intentAvailability.putExtra("id", contactId);
+                        intentAvailability.putExtra("type", userType);
                         startActivity(intentAvailability);
                         break;
 
                     case R.id.nav_contacts:
 
-                            //Intent intentContacts = new Intent(LandingScreen.this, ContactUs.class);
-
+                        if (userType.equals("1")) {
                             Intent intentContacts = new Intent(LandingScreen.this, ContactTeamLeader.class);
-
-                        intentContacts.putExtra("token", mTOKEN);
-                        intentContacts.putExtra("id", contactId);
-                        startActivity(intentContacts);
-                        break;
+                            intentContacts.putExtra("token", mTOKEN);
+                            intentContacts.putExtra("id", contactId);
+                            intentContacts.putExtra("type", userType);
+                            startActivity(intentContacts);
+                            break;
+                        } else {
+                            Intent intentContacts = new Intent(LandingScreen.this, ContactUs.class);
+                            intentContacts.putExtra("token", mTOKEN);
+                            intentContacts.putExtra("id", contactId);
+                            intentContacts.putExtra("type", userType);
+                            startActivity(intentContacts);
+                            break;
+                        }
 
                 }
                 return false;
@@ -92,6 +102,7 @@ public class LandingScreen extends AppCompatActivity {
 
         requestShifts();
 
+        getUserType();
     }
 
     private void requestShifts() {
@@ -232,6 +243,60 @@ public class LandingScreen extends AppCompatActivity {
 
     public void setContactId(String i) {
         contactId = i;
+    }
+
+    public void getUserType() {
+
+        Interceptor authInterception = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer " + mTOKEN).build();
+                return chain.proceed(newRequest);
+            }
+        };
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.interceptors().add(authInterception);
+        OkHttpClient client = builder.build();
+
+        Retrofit build = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+
+        ApiInterface apiInterface = build.create(ApiInterface.class);
+
+        Call<CurrentUser> call = apiInterface.getCurrentUser();
+
+        call.enqueue(new Callback<CurrentUser>() {
+            @Override
+            public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
+
+                int statusCode = response.code();
+                Log.d(TAG, Integer.toString(statusCode));
+                Log.d(TAG, mTOKEN);
+
+                if (statusCode == 200) {
+                    Log.d(TAG, Integer.toString(statusCode));
+
+                    userType = response.body().getType();
+                    Log.e(TAG, userType);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CurrentUser> call, Throwable t) {
+                if (t instanceof IOException) {
+                    Log.e(TAG, "something happened", t);
+                }
+                Log.d(TAG, t.toString());
+            }
+        });
+
+
     }
 
 }

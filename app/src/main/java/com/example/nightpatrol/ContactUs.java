@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.nightpatrol.api.model.ShiftDetails;
+import com.example.nightpatrol.api.model.ShiftUsers;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,6 +13,9 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +23,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -31,11 +37,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactUs extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private ContactAdapter adapter;
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
     private String TAG = "Testing";
     private String shiftID;
-    public TextView name, phone, email;
+    public String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +54,9 @@ public class ContactUs extends AppCompatActivity {
 
         mTOKEN = getIntent().getStringExtra("token");
         shiftID = getIntent().getStringExtra("id");
+        userType =  getIntent().getStringExtra("type");
         Log.d(TAG, "" + mTOKEN);
 
-        name = findViewById(R.id.nameText);
-        phone = findViewById(R.id.phoneText);
-        email = findViewById(R.id.emailText);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -66,6 +72,8 @@ public class ContactUs extends AppCompatActivity {
 
                         Intent intentAvailability = new Intent(ContactUs.this, AvailabilityScreen.class);
                         intentAvailability.putExtra("token", mTOKEN);
+                        intentAvailability.putExtra("id", shiftID);
+                        intentAvailability.putExtra("type", userType);
                         startActivity(intentAvailability);
                         break;
 
@@ -77,6 +85,11 @@ public class ContactUs extends AppCompatActivity {
                 return false;
             }
         });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         requestContact();
 
@@ -117,13 +130,24 @@ public class ContactUs extends AppCompatActivity {
                 Log.d(TAG, mTOKEN);
 
                 if (statusCode == 200) {
-                    String fullName = response.body().getShiftLeader().getFullName();
-                    String leaderMail = response.body().getShiftLeader().getEmail();
-                    String leaderPhone = response.body().getShiftLeader().getPhone();
 
-                    name.setText(fullName);
-                    email.setText(leaderMail);
-                    phone.setText(leaderPhone);
+                    final List<ShiftUsers> user_list = new ArrayList<ShiftUsers>();
+
+                    ShiftUsers leaderContact = new ShiftUsers();
+
+                    leaderContact.setFirstName(response.body().getShiftLeader().getFirstName());
+                    leaderContact.setLastName(response.body().getShiftLeader().getLastName());
+                    leaderContact.setPhone(response.body().getShiftLeader().getPhone());
+                    leaderContact.setEmail(response.body().getShiftLeader().getEmail());
+
+                    user_list.add(leaderContact);
+
+                    user_list.add(addVinniesContact());
+                    user_list.add(addHelplinet());
+
+                    adapter = new ContactAdapter(user_list);
+
+                    recyclerView.setAdapter(adapter);
                 }
 
 
@@ -135,6 +159,28 @@ public class ContactUs extends AppCompatActivity {
             }
         });
 
+    }
+
+    public ShiftUsers addVinniesContact() {
+        ShiftUsers vinniesContact = new ShiftUsers();
+
+        vinniesContact.setFirstName("Vinnies");
+        vinniesContact.setLastName("Support Contacts");
+        vinniesContact.setPhone("610382357923");
+        vinniesContact.setEmail("Vinnies@vinnies");
+
+        return vinniesContact;
+    }
+
+    public ShiftUsers addHelplinet() {
+        ShiftUsers helplineContact = new ShiftUsers();
+
+        helplineContact.setFirstName("Helpline");
+        helplineContact.setLastName("Contacts");
+        helplineContact.setPhone("911");
+        helplineContact.setEmail("ACT@Police");
+
+        return helplineContact;
     }
 
 }

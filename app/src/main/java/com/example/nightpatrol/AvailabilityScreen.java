@@ -38,6 +38,7 @@ public class AvailabilityScreen extends AppCompatActivity {
     public Button saveButton;
     public String id;
     public String contactId;
+    public String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class AvailabilityScreen extends AppCompatActivity {
 
         mTOKEN = getIntent().getStringExtra("token");
         contactId = getIntent().getStringExtra("id");
+        userType = getIntent().getStringExtra("type");
 
 
         switchMonday = findViewById(R.id.switchMonday);
@@ -76,11 +78,21 @@ public class AvailabilityScreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_contacts:
-                        Intent intentContacts = new Intent(AvailabilityScreen.this, ContactUs.class);
-                        intentContacts.putExtra("token", mTOKEN);
-                        intentContacts.putExtra("id", contactId);
-                        startActivity(intentContacts);
-                        break;
+                        if (userType.equals("1")) {
+                            Intent intentContacts = new Intent(AvailabilityScreen.this, ContactTeamLeader.class);
+                            intentContacts.putExtra("token", mTOKEN);
+                            intentContacts.putExtra("id", contactId);
+                            intentContacts.putExtra("type", userType);
+                            startActivity(intentContacts);
+                            break;
+                        } else {
+                            Intent intentContacts = new Intent(AvailabilityScreen.this, ContactUs.class);
+                            intentContacts.putExtra("token", mTOKEN);
+                            intentContacts.putExtra("id", contactId);
+                            intentContacts.putExtra("type", userType);
+                            startActivity(intentContacts);
+                            break;
+                        }
 
                 }
                 return false;
