@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.nightpatrol.api.model.ShiftDetails;
+import com.example.nightpatrol.api.model.ShiftUsers;
 import com.example.nightpatrol.api.service.ApiInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -29,42 +29,38 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ContactUs extends AppCompatActivity {
+public class ContactTeamLeader extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private ContactAdapter adapter;
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
-    private String TAG = "Testing";
     private String shiftID;
-    public TextView name, phone, email;
+    private String TAG = "Jarrad sucks";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_us);
+        setContentView(R.layout.activity_contact_team_leader);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
         mTOKEN = getIntent().getStringExtra("token");
         shiftID = getIntent().getStringExtra("id");
-        Log.d(TAG, "" + mTOKEN);
 
-        name = findViewById(R.id.nameText);
-        phone = findViewById(R.id.phoneText);
-        email = findViewById(R.id.emailText);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        Intent intentHome= new Intent(ContactUs.this, LandingScreen.class);
-                        intentHome.putExtra("token", mTOKEN);
-                        startActivity(intentHome);
+                        Intent intentContacts = new Intent(ContactTeamLeader.this, LandingScreen.class);
+                        intentContacts.putExtra("token", mTOKEN);
+                        startActivity(intentContacts);
                         break;
 
                     case R.id.nav_availability:
-
-                        Intent intentAvailability = new Intent(ContactUs.this, AvailabilityScreen.class);
+                        Intent intentAvailability = new Intent(ContactTeamLeader.this, AvailabilityScreen.class);
                         intentAvailability.putExtra("token", mTOKEN);
                         startActivity(intentAvailability);
                         break;
@@ -78,11 +74,17 @@ public class ContactUs extends AppCompatActivity {
             }
         });
 
-        requestContact();
+        recyclerView = findViewById(R.id.recyclerView);
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        requestContacts();
 
     }
 
-    private void requestContact() {
+
+    private void requestContacts() {
 
         Interceptor authInterception = new Interceptor() {
             @Override
@@ -104,29 +106,33 @@ public class ContactUs extends AppCompatActivity {
 
         final ApiInterface apiInterface = build.create(ApiInterface.class);
 
-        Call<ShiftDetails> call = apiInterface.getShiftDetails(shiftID);
+        Call<ShiftDetails> callFirst = apiInterface.getShiftDetails(shiftID);
 
-        Log.d(TAG, shiftID +"");
-
-        call.enqueue(new Callback<ShiftDetails>() {
+        callFirst.enqueue(new Callback<ShiftDetails>() {
             @Override
             public void onResponse(Call<ShiftDetails> call, Response<ShiftDetails> response) {
-
                 int statusCode = response.code();
                 Log.d(TAG, Integer.toString(statusCode));
                 Log.d(TAG, mTOKEN);
 
+
+                final List<ShiftUsers> user_list = response.body().getShiftUsers();
+                
+
                 if (statusCode == 200) {
-                    String fullName = response.body().getShiftLeader().getFullName();
-                    String leaderMail = response.body().getShiftLeader().getEmail();
-                    String leaderPhone = response.body().getShiftLeader().getPhone();
+
+                    adapter = new ContactAdapter(user_list);
+                    recyclerView.setAdapter(adapter);
+
+                    /*String fullName = response.body().getShiftDriver().getFullName();
+                    String leaderMail = response.body().getShiftDriver().getEmail();
+                    String leaderPhone = response.body().getShiftDriver().getPhone();
 
                     name.setText(fullName);
                     email.setText(leaderMail);
-                    phone.setText(leaderPhone);
+                    phone.setText(leaderPhone);*/
+
                 }
-
-
             }
 
             @Override
@@ -138,3 +144,5 @@ public class ContactUs extends AppCompatActivity {
     }
 
 }
+
+

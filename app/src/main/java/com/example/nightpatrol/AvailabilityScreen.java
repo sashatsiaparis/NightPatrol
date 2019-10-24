@@ -67,6 +67,7 @@ public class AvailabilityScreen extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intentAvailability = new Intent(AvailabilityScreen.this, LandingScreen.class);
                         intentAvailability.putExtra("token", mTOKEN);
+                        intentAvailability.putExtra("id", contactId);
                         startActivity(intentAvailability);
                         break;
 

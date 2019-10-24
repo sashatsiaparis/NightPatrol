@@ -70,7 +70,11 @@ public class LandingScreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_contacts:
-                        Intent intentContacts = new Intent(LandingScreen.this, ContactUs.class);
+
+                            //Intent intentContacts = new Intent(LandingScreen.this, ContactUs.class);
+
+                            Intent intentContacts = new Intent(LandingScreen.this, ContactTeamLeader.class);
+
                         intentContacts.putExtra("token", mTOKEN);
                         intentContacts.putExtra("id", contactId);
                         startActivity(intentContacts);
