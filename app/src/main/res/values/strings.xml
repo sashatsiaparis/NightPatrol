@@ -32,4 +32,5 @@
     <string name="cancel_dialogue">Are you sure you wish to remove yourself from this shift?</string>
     <string name="contacts">Contacts</string>
     <string name="title_activity_contact_team_leader">ContactTeamLeader</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

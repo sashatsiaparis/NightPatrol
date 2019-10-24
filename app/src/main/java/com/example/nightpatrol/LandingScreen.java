@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.nightpatrol.api.model.CurrentUser;
@@ -54,6 +55,14 @@ public class LandingScreen extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
         mTOKEN = getIntent().getStringExtra("token");
+        ImageView settingsImage = findViewById(R.id.imageSettings);
+        settingsImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentSettings = new Intent(LandingScreen.this, Settings.class);
+                intentSettings.putExtra("token", mTOKEN);
+                startActivity(intentSettings);
+            }
+        });
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
