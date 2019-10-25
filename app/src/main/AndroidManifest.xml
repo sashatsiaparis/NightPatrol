@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nightpatrol">
+    package="com.vinniesnp.nightpatrol">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,26 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Settings"
+            android:name="com.vinniesnp.nightpatrol.Settings"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".ContactTeamLeader"
+            android:name="com.vinniesnp.nightpatrol.ContactTeamLeader"
             android:label="@string/title_activity_contact_team_leader"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ContactUs"
+            android:name="com.vinniesnp.nightpatrol.ContactUs"
             android:label="@string/title_activity_contact_us"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AvailabilityScreen"
+            android:name="com.vinniesnp.nightpatrol.AvailabilityScreen"
             android:label="@string/title_activity_availability_screen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LandingScreen"
+            android:name="com.vinniesnp.nightpatrol.LandingScreen"
             android:label="@string/title_activity_landing_screen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.vinniesnp.nightpatrol.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
