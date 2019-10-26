@@ -327,4 +327,8 @@ public class LandingScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
 }

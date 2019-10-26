@@ -1,5 +1,6 @@
 package com.vinniesnp.nightpatrol;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +63,15 @@ public class Settings extends AppCompatActivity {
         textEmail.setText(email);
         textPhone.setText(phone);
 
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentSettings = new Intent(Settings.this, MainActivity.class);
+                intentSettings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intentSettings);
+            }
+        });
+
         Button exitButton = findViewById(R.id.exitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -74,6 +85,28 @@ public class Settings extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 updateDetails();
+            }
+        });
+
+
+        ImageView creditImage = findViewById(R.id.imageCredit);
+        creditImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final android.app.AlertDialog.Builder mBuilder = new AlertDialog.Builder(Settings.this);
+                View mView = getLayoutInflater().inflate(R.layout.credit_screen, null);
+                Button mClose = mView.findViewById(R.id.closeCreditButton);
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                mClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+
+                    }
+                });
             }
         });
 

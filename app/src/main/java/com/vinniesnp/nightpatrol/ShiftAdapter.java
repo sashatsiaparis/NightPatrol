@@ -60,7 +60,7 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ViewHolder> 
         holder.dateView.setText(formattedDate);
         holder.vanView.setText(shift.getVehicle());
         holder.timeView.setText(time.format(date));
-        holder.shiftIDView.setText(shift.getId());
+       // holder.shiftIDView.setText(shift.getId());
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,7 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ViewHolder> 
         public TextView dateView;
         public TextView vanView;
         public TextView timeView;
-        public TextView shiftIDView;
+       // public TextView shiftIDView;
         public LinearLayout linearLayout;
         private View subItem;
         public Button deleteButton;
@@ -91,12 +91,10 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ViewHolder> 
             super(itemView);
 
             deleteButton = itemView.findViewById(R.id.sub_item_genre);
-
-
             this.dateView = itemView.findViewById(R.id.dateText);
             this.vanView = itemView.findViewById(R.id.vanText);
             this.timeView = itemView.findViewById(R.id.timeText);
-            this.shiftIDView = itemView.findViewById(R.id.shiftIDText);
+           // this.shiftIDView = itemView.findViewById(R.id.shiftIDText);
             subItem = itemView.findViewById(R.id.sub_item);
 
             linearLayout = itemView.findViewById(R.id.relativeLayout);

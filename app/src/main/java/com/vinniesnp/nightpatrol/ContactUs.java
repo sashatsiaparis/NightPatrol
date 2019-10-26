@@ -161,8 +161,8 @@ public class ContactUs extends AppCompatActivity {
 
         vinniesContact.setFirstName("Vinnies");
         vinniesContact.setLastName("Support Contacts");
-        vinniesContact.setPhone("610382357923");
-        vinniesContact.setEmail("Vinnies@vinnies");
+        vinniesContact.setPhone("02 6282 2722");
+        vinniesContact.setEmail("info@svdp-cg.org.au");
 
         return vinniesContact;
     }
@@ -170,10 +170,10 @@ public class ContactUs extends AppCompatActivity {
     public ShiftUsers addHelplinet() {
         ShiftUsers helplineContact = new ShiftUsers();
 
-        helplineContact.setFirstName("Helpline");
-        helplineContact.setLastName("Contacts");
-        helplineContact.setPhone("911");
-        helplineContact.setEmail("ACT@Police");
+        helplineContact.setFirstName("Police Assistance Line");
+        helplineContact.setLastName("");
+        helplineContact.setPhone("131 444");
+        helplineContact.setEmail("");
 
         return helplineContact;
     }

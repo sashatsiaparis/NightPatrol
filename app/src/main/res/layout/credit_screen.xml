@@ -10,25 +10,20 @@
     android:paddingBottom="12dp">
 
     <LinearLayout
-        android:id="@+id/contactLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <FrameLayout
-            android:id="@+id/margin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/callImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="top"
-                android:layout_marginTop="2dp"
-                android:src="@drawable/ic_call"
-                tools:srcCompat="@drawable/ic_call" />
+                android:layout_gravity="center_vertical"
+                android:src="@android:drawable/ic_menu_edit"
+                tools:srcCompat="@android:drawable/ic_menu_edit" />
         </FrameLayout>
 
         <LinearLayout
@@ -42,33 +37,59 @@
             android:paddingRight="10dp">
 
             <TextView
-                android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="#000000"
-                android:textSize="22sp"
+                android:text="@string/credit"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/phoneText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="041111111"
-                android:textSize="18sp" />
+                android:text="Credit Icons:" />
 
             <TextView
-                android:id="@+id/emailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="test@email.com" />
+                android:text="www.links.com" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Android Version 0.1.1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Credit SJKAP" />
 
 
         </LinearLayout>
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/sub_item"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="80"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/closeCreditButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/cancel_btn"
+            android:text="@string/exit"
+            android:textColor="@android:color/black" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

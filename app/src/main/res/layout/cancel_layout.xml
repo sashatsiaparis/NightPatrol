@@ -23,8 +23,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_lock_outline_black_24dp"
-                tools:srcCompat="@drawable/ic_lock_outline_black_24dp" />
+                android:src="@drawable/ic_cancel"
+                tools:srcCompat="@drawable/ic_cancel" />
         </FrameLayout>
 
         <LinearLayout
@@ -72,7 +72,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@android:color/holo_red_dark"
-            android:text="Remove"
+            android:text="@string/remove"
             android:textColor="#FDFDFE" />
 
         <Button
@@ -82,7 +82,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:background="@drawable/cancel_btn"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
 
     </RelativeLayout>
 

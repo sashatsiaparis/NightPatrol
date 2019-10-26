@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Log.e(TAG, "Incorrect Login");
                         Toast.makeText(MainActivity.this, "Wrong username or inputPassword", Toast.LENGTH_SHORT).show();
+                        inputPassword.setError("Wrong username or password");
                     }
                 }
 

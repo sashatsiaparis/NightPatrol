@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -223,6 +224,7 @@ public class AvailabilityScreen extends AppCompatActivity {
 
                         if (statusCode == 200) {
                             Log.d(TAG, response.body().toString());
+                            Toast.makeText(AvailabilityScreen.this, "Availability saved!", Toast.LENGTH_SHORT).show();
                         }
 
                     }
