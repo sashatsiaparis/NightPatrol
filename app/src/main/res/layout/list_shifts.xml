@@ -114,8 +114,10 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@android:color/holo_red_dark"
-            android:textColor="#FDFDFE"
-            android:text="Cancel Shift" />
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Cancel Shift"
+            android:textColor="#FDFDFE" />
 
     </RelativeLayout>
 
