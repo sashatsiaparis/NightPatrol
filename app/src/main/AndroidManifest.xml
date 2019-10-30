@@ -32,7 +32,7 @@
             android:name="com.vinniesnp.nightpatrol.LandingScreen"
             android:label="@string/title_activity_landing_screen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.vinniesnp.nightpatrol.MainActivity">
+        <activity android:name="com.vinniesnp.nightpatrol.LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

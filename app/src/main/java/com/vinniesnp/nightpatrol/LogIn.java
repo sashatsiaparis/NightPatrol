@@ -30,14 +30,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class LogIn extends AppCompatActivity {
 
     public String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
 
-    private static final String TAG = MainActivity.class.getName();
+    private static final String TAG = "LogIn - Error";
 
     private EditText inputEmail;
     private EditText inputPassword;
+
+    public int statusCode;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -74,34 +76,35 @@ public class MainActivity extends AppCompatActivity {
                     .setLenient()
                     .create();
 
-            Retrofit.Builder builder = new Retrofit.Builder()
+            Retrofit.Builder builderOne = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson));
 
-            Retrofit retrofit = builder.build();
+            Retrofit retrofit = builderOne.build();
 
-            ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+            ApiInterface apiService = retrofit.create(ApiInterface.class);
 
-            Call<User> call = apiInterface.getUser(login.getEmail(), login.getPassword());
+            Call<User> callUser = apiService.getUser(login.getEmail(), login.getPassword());
 
-            call.enqueue(new Callback<User>() {
+            callUser.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-
-                    int statusCode = response.code();
                     final User token = response.body();
+                    //Get response code
+                    statusCode = response.code();
 
-                    if (statusCode == 200) {
+                    //If response == 200
+                    if (response.isSuccessful()) {
                         Log.d(TAG, token.getToken());
                         Log.d(TAG, token.getTemporaryStatus());
 
                         if (token.getTemporaryStatus().toLowerCase().equals("true")) {
-                            final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                            final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogIn.this);
                             View mView = getLayoutInflater().inflate(R.layout.dialog_layout, null);
-                            final EditText mPassword1 = (EditText) mView.findViewById(R.id.password1);
-                            final EditText mPassword2 = (EditText) mView.findViewById(R.id.password2);
-                            Button mSave = (Button) mView.findViewById(R.id.savePasswordButton);
-                            Button mCancel = (Button) mView.findViewById(R.id.cancelButton);
+                            final EditText mPassword1 = mView.findViewById(R.id.password1);
+                            final EditText mPassword2 = mView.findViewById(R.id.password2);
+                            Button mSave = mView.findViewById(R.id.savePasswordButton);
+                            Button mCancel = mView.findViewById(R.id.cancelButton);
 
                             mBuilder.setView(mView);
                             final AlertDialog dialog = mBuilder.create();
@@ -132,42 +135,62 @@ public class MainActivity extends AppCompatActivity {
                                                 builder.interceptors().add(interceptor);
                                                 OkHttpClient client = builder.build();
 
-                                                Retrofit builder2 = new Retrofit.Builder()
+                                                Retrofit builderTwo = new Retrofit.Builder()
                                                         .baseUrl(BASE_URL)
                                                         .addConverterFactory(GsonConverterFactory.create())
                                                         .client(client)
                                                         .build();
 
-                                                ApiInterface apiService2 = builder2.create(ApiInterface.class);
+                                                ApiInterface apiService = builderTwo.create(ApiInterface.class);
 
-                                                Call<PasswordChange> call2 = apiService2.postPassword(new PasswordChange(mPassword1.getText().toString()));
+                                                Call<PasswordChange> callPassword = apiService.postPassword(new PasswordChange(mPassword1.getText().toString()));
 
-                                                call2.enqueue(new Callback<PasswordChange>() {
+                                                callPassword.enqueue(new Callback<PasswordChange>() {
                                                     @Override
                                                     public void onResponse(Call<PasswordChange> call, Response<PasswordChange> response) {
+                                                        //Get response code
+                                                        statusCode = response.code();
 
-                                                        int statusCode = response.code();
+                                                        //If response == 200
+                                                        if (response.isSuccessful()) {
+                                                            Toast.makeText(LogIn.this, "Password successfully changed!", Toast.LENGTH_SHORT).show();
 
-                                                        Log.d(TAG, Integer.toString(statusCode));
-
-                                                        if (statusCode == 200) {
-                                                            Toast.makeText(MainActivity.this, "Password successfully changed!", Toast.LENGTH_SHORT).show();
-
-                                                            Intent intent = new Intent(MainActivity.this, LandingScreen.class);
+                                                            //Goto Landing screen on success.
+                                                            Intent intent = new Intent(LogIn.this, LandingScreen.class);
                                                             intent.putExtra("token", token.getToken());
                                                             startActivity(intent);
+                                                        } else {
+                                                            switch (statusCode) {
+                                                                case 400:
+                                                                    //400 error, required parameters missing
+                                                                    Toast.makeText(LogIn.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                                                                    Log.e(TAG, statusCode + " " + response.errorBody().toString() + "Login error");
+                                                                    break;
+                                                                case 401:
+                                                                    //401 error, token missing or invalid.
+                                                                    Toast.makeText(LogIn.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                                                                    Log.e(TAG, statusCode + "JWT missing or invalid");
+                                                                    break;
+                                                                case 500:
+                                                                    //500 error, server error. Bug in API
+                                                                    Toast.makeText(LogIn.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                                                                    Log.e(TAG, statusCode + "Something is wrong with the API");
+                                                                    break;
+                                                                default:
+                                                                    Toast.makeText(LogIn.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                                                                    Log.e(TAG, statusCode + "Unknown error");
+                                                            }
                                                         }
+
                                                     }
 
                                                     @Override
                                                     public void onFailure(Call<PasswordChange> call, Throwable t) {
                                                         if (t instanceof IOException) {
-                                                            Toast.makeText(MainActivity.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
-                                                            Log.e(TAG, "help me more", t);
+                                                            Toast.makeText(LogIn.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                                                            Log.e(TAG, statusCode + " ", t);
                                                         }
-
                                                         Log.d(TAG, t.toString());
-
                                                     }
                                                 });
                                             }
@@ -191,27 +214,50 @@ public class MainActivity extends AppCompatActivity {
                             });
 
                         } else {
-                            Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, LandingScreen.class);
+                            Toast.makeText(LogIn.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LogIn.this, LandingScreen.class);
                             intent.putExtra("token", token.getToken());
                             startActivity(intent);
                         }
+
                     } else {
-                        Log.e(TAG, "Incorrect Login");
-                        Toast.makeText(MainActivity.this, "Wrong username or inputPassword", Toast.LENGTH_SHORT).show();
-                        inputPassword.setError("Wrong username or password");
+                        switch (statusCode) {
+                            case 400:
+                                //400 error, required parameters missing
+                                Toast.makeText(LogIn.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, statusCode + " " + response.errorBody().toString() + "Login error");
+                                break;
+                            case 401:
+                                //401 error, token missing or invalid.
+                                Toast.makeText(LogIn.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, statusCode + "JWT missing or invalid");
+                                break;
+                            case 404:
+                                //401 error, token missing or invalid.
+                                Toast.makeText(LogIn.this, "Wrong username or password.", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, statusCode + "Wrong username or password");
+                                break;
+                            case 500:
+                                //500 error, server error. Bug in API
+                                Toast.makeText(LogIn.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, statusCode + "Something is wrong with the API");
+                                break;
+                            default:
+                                Toast.makeText(LogIn.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, statusCode + "Unknown error");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     if (t instanceof IOException) {
-                        Toast.makeText(MainActivity.this, "This is an actual network failure, please contact the developer.", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "help", t);
+                        Toast.makeText(LogIn.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "No Internet", t);
 
                     } else {
-                        Toast.makeText(MainActivity.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "help me more", t);
+                        Toast.makeText(LogIn.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Conversion issue", t);
                     }
                 }
             });

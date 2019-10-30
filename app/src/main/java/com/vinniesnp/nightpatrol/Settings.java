@@ -66,7 +66,7 @@ public class Settings extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intentSettings = new Intent(Settings.this, MainActivity.class);
+                Intent intentSettings = new Intent(Settings.this, LogIn.class);
                 intentSettings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentSettings);
             }

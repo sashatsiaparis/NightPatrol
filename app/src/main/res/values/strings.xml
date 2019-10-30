@@ -1,5 +1,5 @@
 <resources>
-    <!--MainActivity Login-->
+    <!--LogIn Login-->
     <string name="app_name">Vinnies Night Patrol</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
@@ -58,5 +58,8 @@
 
     <!--Credits-->
     <string name="cancel_icon"><div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
-    <string name="credit">Credit</string>
+    <string name="van_icon"><div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
+    <string name="settings_icon"><div>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></string>
+    <string name="developer_credits">Developed by: Sasha Tsiaparis, Jarrad Hurley, Kiran Bangalore, Nicholas Fennell</string>
+    <string name="credit">Credits</string>
 </resources>

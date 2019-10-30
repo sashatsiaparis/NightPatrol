@@ -16,15 +16,7 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:src="@android:drawable/ic_menu_edit"
-                tools:srcCompat="@android:drawable/ic_menu_edit" />
-        </FrameLayout>
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -53,19 +45,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="www.links.com" />
+                android:text="@string/van_icon" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/cancel_icon" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/settings_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Android Version 0.1.1" />
+                android:text="Android Version 0.1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Credit SJKAP" />
+                android:text="@string/developer_credits" />
 
 
         </LinearLayout>
