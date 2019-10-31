@@ -1,4 +1,4 @@
-package com.example.nightpatrol;
+package com.vinniesnp.nightpatrol;
 
 import org.junit.Test;
 
