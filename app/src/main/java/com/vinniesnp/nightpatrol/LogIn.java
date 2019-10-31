@@ -95,8 +95,6 @@ public class LogIn extends AppCompatActivity {
 
                     //If response == 200
                     if (response.isSuccessful()) {
-                        Log.d(TAG, token.getToken());
-                        Log.d(TAG, token.getTemporaryStatus());
 
                         if (token.getTemporaryStatus().toLowerCase().equals("true")) {
                             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogIn.this);
@@ -187,10 +185,13 @@ public class LogIn extends AppCompatActivity {
                                                     @Override
                                                     public void onFailure(Call<PasswordChange> call, Throwable t) {
                                                         if (t instanceof IOException) {
+                                                            Toast.makeText(LogIn.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                                                            Log.e(TAG, "No Internet", t);
+
+                                                        } else {
                                                             Toast.makeText(LogIn.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
-                                                            Log.e(TAG, statusCode + " ", t);
+                                                            Log.e(TAG, "Conversion issue", t);
                                                         }
-                                                        Log.d(TAG, t.toString());
                                                     }
                                                 });
                                             }

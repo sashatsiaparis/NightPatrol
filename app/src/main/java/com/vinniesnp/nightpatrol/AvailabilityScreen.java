@@ -35,7 +35,7 @@ public class AvailabilityScreen extends AppCompatActivity {
 
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
-    private String TAG = "Jarrad sucks";
+    private String TAG = "Availability - Error";
     public Button saveScheduleButton;
     public String id;
     public String contactId;
@@ -49,7 +49,6 @@ public class AvailabilityScreen extends AppCompatActivity {
         mTOKEN = getIntent().getStringExtra("token");
         contactId = getIntent().getStringExtra("id");
         userType = getIntent().getStringExtra("type");
-
 
         switchMonday = findViewById(R.id.switchMonday);
         switchTuesday = findViewById(R.id.switchTuesday);
@@ -94,17 +93,12 @@ public class AvailabilityScreen extends AppCompatActivity {
                             startActivity(intentContacts);
                             break;
                         }
-
                 }
                 return false;
             }
         });
-
-
-
         getAvailability();
         saveSchedule();
-
     }
 
     private void getAvailability() {
@@ -126,7 +120,6 @@ public class AvailabilityScreen extends AppCompatActivity {
                 .client(client)
                 .build();
 
-
         ApiInterface apiInterface = build.create(ApiInterface.class);
 
         Call<CurrentUser> call = apiInterface.getCurrentUser();
@@ -136,8 +129,7 @@ public class AvailabilityScreen extends AppCompatActivity {
             public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
 
                 int statusCode = response.code();
-                Log.d(TAG, Integer.toString(statusCode));
-                Log.d(TAG, mTOKEN);
+
                 monday = response.body().getSchedule().getMonday();
                 tuesday = response.body().getSchedule().getTuesday();
                 wednesday = response.body().getSchedule().getWednesday();
@@ -148,10 +140,7 @@ public class AvailabilityScreen extends AppCompatActivity {
 
                 id = response.body().getId();
 
-                if (statusCode == 200) {
-                    Log.d(TAG, Integer.toString(statusCode));
-                    Log.d(TAG, id);
-
+                if (response.isSuccessful()) {
                     switchMonday.setChecked(monday);
                     switchTuesday.setChecked(tuesday);
                     switchWednesday.setChecked(wednesday);
@@ -159,27 +148,37 @@ public class AvailabilityScreen extends AppCompatActivity {
                     switchFriday.setChecked(friday);
                     switchSaturday.setChecked(saturday);
                     switchSunday.setChecked(sunday);
-
-                    String test = switchThursday.isChecked() + " " + switchSunday.isChecked() + " " + switchMonday.isChecked() + " ";
-
-                    Log.d(TAG, test);
-
+                } else {
+                    switch (statusCode) {
+                        case 401:
+                            //401 error, token missing or invalid.
+                            Toast.makeText(AvailabilityScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "JWT missing or invalid");
+                            break;
+                        case 500:
+                            //500 error, server error. Bug in API
+                            Toast.makeText(AvailabilityScreen.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Something is wrong with the API");
+                            break;
+                        default:
+                            Toast.makeText(AvailabilityScreen.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Unknown error");
+                    }
                 }
-
             }
 
             @Override
             public void onFailure(Call<CurrentUser> call, Throwable t) {
                 if (t instanceof IOException) {
-                    Log.e(TAG, "something happened", t);
+                    Toast.makeText(AvailabilityScreen.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Internet", t);
+
+                } else {
+                    Toast.makeText(AvailabilityScreen.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Conversion issue", t);
                 }
-                Log.d(TAG, t.toString());
             }
         });
-
-        String test = switchThursday.isChecked() + " " + switchSunday.isChecked() + " " + switchMonday.isChecked() + " ";
-
-        Log.d(TAG, test);
     }
 
     private void saveSchedule() {
@@ -218,24 +217,48 @@ public class AvailabilityScreen extends AppCompatActivity {
                     public void onResponse(Call<Schedule> call, Response<Schedule> response) {
 
                         int statusCode = response.code();
-                        Log.d(TAG, Integer.toString(statusCode));
-                        Log.d(TAG, response.raw().toString());
-                        Log.d(TAG, id);
 
-                        if (statusCode == 200) {
-                            Log.d(TAG, response.body().toString());
+                        if (response.isSuccessful()) {
                             Toast.makeText(AvailabilityScreen.this, "Availability saved!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            switch (statusCode) {
+                                case 400:
+                                    //400 error, required parameters missing
+                                    Toast.makeText(AvailabilityScreen.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, statusCode + " " + response.errorBody().toString() + "Login error");
+                                    break;
+                                case 401:
+                                    //401 error, token missing or invalid.
+                                    Toast.makeText(AvailabilityScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, statusCode + "JWT missing or invalid");
+                                    break;
+                                case 403:
+                                    //401 error, token missing or invalid.
+                                    Toast.makeText(AvailabilityScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, statusCode + "JWT missing or invalid");
+                                    break;
+                                case 500:
+                                    //500 error, server error. Bug in API
+                                    Toast.makeText(AvailabilityScreen.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, statusCode + "Something is wrong with the API");
+                                    break;
+                                default:
+                                    Toast.makeText(AvailabilityScreen.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, statusCode + "Unknown error");
+                            }
                         }
-
                     }
 
                     @Override
                     public void onFailure(Call<Schedule> call, Throwable t) {
                         if (t instanceof IOException) {
-                            Log.e(TAG, "help me more", t);
-                        }
+                            Toast.makeText(AvailabilityScreen.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "No Internet", t);
 
-                        Log.d(TAG, t.toString());
+                        } else {
+                            Toast.makeText(AvailabilityScreen.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Conversion issue", t);
+                        }
                     }
                 });
             }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class ContactUs extends AppCompatActivity {
     private ContactAdapter adapter;
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
-    private String TAG = "Testing";
+    private String TAG = "ContactsVolunteer - Error";
     private String shiftID;
     public String userType;
 
@@ -49,7 +50,7 @@ public class ContactUs extends AppCompatActivity {
 
         mTOKEN = getIntent().getStringExtra("token");
         shiftID = getIntent().getStringExtra("id");
-        userType =  getIntent().getStringExtra("type");
+        userType = getIntent().getStringExtra("type");
         Log.d(TAG, "" + mTOKEN);
 
 
@@ -58,7 +59,7 @@ public class ContactUs extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        Intent intentHome= new Intent(ContactUs.this, LandingScreen.class);
+                        Intent intentHome = new Intent(ContactUs.this, LandingScreen.class);
                         intentHome.putExtra("token", mTOKEN);
                         startActivity(intentHome);
                         break;
@@ -114,18 +115,16 @@ public class ContactUs extends AppCompatActivity {
 
         Call<ShiftDetails> call = apiInterface.getShiftDetails(shiftID);
 
-        Log.d(TAG, shiftID +"");
+        Log.d(TAG, shiftID + "");
 
         call.enqueue(new Callback<ShiftDetails>() {
             @Override
             public void onResponse(Call<ShiftDetails> call, Response<ShiftDetails> response) {
 
                 int statusCode = response.code();
-                Log.d(TAG, Integer.toString(statusCode));
-                Log.d(TAG, mTOKEN);
 
-                if (statusCode == 200) {
-
+                //First if statement checks if there is a shift leader assigned to the shift, if there is we get the shift leader.
+                if (response.isSuccessful() && (response.body().getShiftLeader()!= null)) {
                     final List<ShiftUsers> user_list = new ArrayList<ShiftUsers>();
 
                     ShiftUsers leaderContact = new ShiftUsers();
@@ -134,23 +133,57 @@ public class ContactUs extends AppCompatActivity {
                     leaderContact.setLastName(response.body().getShiftLeader().getLastName());
                     leaderContact.setPhone(response.body().getShiftLeader().getPhone());
                     leaderContact.setEmail(response.body().getShiftLeader().getEmail());
-
                     user_list.add(leaderContact);
 
                     user_list.add(addVinniesContact());
                     user_list.add(addHelplinet());
 
                     adapter = new ContactAdapter(user_list);
-
                     recyclerView.setAdapter(adapter);
+                    //Second if checks if there is a shift leader assigned to the shift, if there isn't, we don't set it.
+                } else if (response.isSuccessful() && (response.body().getShiftLeader() == null)) {
+                    final List<ShiftUsers> user_list = new ArrayList<ShiftUsers>();
+
+                    user_list.add(addVinniesContact());
+                    user_list.add(addHelplinet());
+
+                    adapter = new ContactAdapter(user_list);
+                    recyclerView.setAdapter(adapter);
+
+                } else {
+                    switch (statusCode) {
+                        case 401:
+                            //401 error, token missing or invalid.
+                            Toast.makeText(ContactUs.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "JWT missing or invalid");
+                            break;
+                        case 500:
+                            //500 error, server error. Bug in API
+                            Toast.makeText(ContactUs.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Something is wrong with the API");
+                            break;
+                        case 403:
+                            //403 error, does not have permission to access
+                            Toast.makeText(ContactUs.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Client not allowed to access this content");
+                            break;
+                        default:
+                            Toast.makeText(ContactUs.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Unknown error");
+                    }
                 }
-
-
             }
 
             @Override
             public void onFailure(Call<ShiftDetails> call, Throwable t) {
-                Log.d(TAG, t.toString());
+                if (t instanceof IOException) {
+                    Toast.makeText(ContactUs.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Internet", t);
+
+                } else {
+                    Toast.makeText(ContactUs.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Conversion issue", t);
+                }
             }
         });
 

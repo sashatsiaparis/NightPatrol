@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Interceptor;
@@ -38,7 +40,7 @@ public class ContactTeamLeader extends AppCompatActivity {
     private String shiftID;
     public String userType;
 
-    private String TAG = "Jarrad sucks";
+    private String TAG = "ContactsTeamLeader - Error";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,6 @@ public class ContactTeamLeader extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         requestContacts();
-
     }
 
 
@@ -116,11 +117,8 @@ public class ContactTeamLeader extends AppCompatActivity {
             @Override
             public void onResponse(Call<ShiftDetails> call, Response<ShiftDetails> response) {
                 int statusCode = response.code();
-                Log.d(TAG, Integer.toString(statusCode));
-                Log.d(TAG, mTOKEN);
 
-                if (statusCode == 200) {
-
+                if (response.isSuccessful() && (response.body().getShiftUsers() != null)) {
                     final List<ShiftUsers> user_list = response.body().getShiftUsers();
 
                     user_list.add(addVinniesContact());
@@ -130,20 +128,44 @@ public class ContactTeamLeader extends AppCompatActivity {
 
                     recyclerView.setAdapter(adapter);
 
-                    /*String fullName = response.body().getShiftDriver().getFullName();
-                    String leaderMail = response.body().getShiftDriver().getEmail();
-                    String leaderPhone = response.body().getShiftDriver().getPhone();
+                } else if (response.isSuccessful() && (response.body().getShiftUsers() == null)){
+                    final List<ShiftUsers> user_list = new ArrayList<>();
 
-                    name.setText(fullName);
-                    email.setText(leaderMail);
-                    phone.setText(leaderPhone);*/
+                    user_list.add(addVinniesContact());
+                    user_list.add(addHelplinet());
 
+                    adapter = new ContactAdapter(user_list);
+
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    switch (statusCode) {
+                        case 401:
+                            //401 error, token missing or invalid.
+                            Toast.makeText(ContactTeamLeader.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "JWT missing or invalid");
+                            break;
+                        case 500:
+                            //500 error, server error. Bug in API
+                            Toast.makeText(ContactTeamLeader.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Something is wrong with the API");
+                            break;
+                        default:
+                            Toast.makeText(ContactTeamLeader.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Unknown error");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ShiftDetails> call, Throwable t) {
-                Log.d(TAG, t.toString());
+                if (t instanceof IOException) {
+                    Toast.makeText(ContactTeamLeader.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Internet", t);
+
+                } else {
+                    Toast.makeText(ContactTeamLeader.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Conversion issue", t);
+                }
             }
         });
 

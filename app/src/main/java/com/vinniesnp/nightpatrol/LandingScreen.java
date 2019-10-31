@@ -42,7 +42,7 @@ public class LandingScreen extends AppCompatActivity {
     private ShiftAdapter adapter;
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
     public String mTOKEN;
-    private String TAG = "Jarrad sucks";
+    private String TAG = "LandingScreen - Error";
     private String userID;
     private String contactId;
     private String userType;
@@ -61,7 +61,6 @@ public class LandingScreen extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
         mTOKEN = getIntent().getStringExtra("token");
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -158,8 +157,7 @@ public class LandingScreen extends AppCompatActivity {
                 int statusCode = response.code();
                 final List<Shift> shifts_list = response.body();
 
-                Log.d(TAG, Integer.toString(statusCode));
-                if (statusCode == 200) {
+                if (response.isSuccessful()) {
 
                     adapter = new ShiftAdapter(shifts_list);
                     recyclerView.setAdapter(adapter);
@@ -171,7 +169,7 @@ public class LandingScreen extends AppCompatActivity {
                         public void onDeleteClick(final int position) {
                             final android.app.AlertDialog.Builder mBuilder = new AlertDialog.Builder(LandingScreen.this);
                             View mView = getLayoutInflater().inflate(R.layout.cancel_layout, null);
-                            Button mDelete = (Button) mView.findViewById(R.id.deleteShiftButton);
+                            Button mDelete = mView.findViewById(R.id.deleteShiftButton);
                             Button mCancel = mView.findViewById(R.id.cancelButton);
 
                             mBuilder.setView(mView);
@@ -189,7 +187,6 @@ public class LandingScreen extends AppCompatActivity {
                             mDelete.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-
 
                                     final String shiftID = shifts_list.get(position).getId();
                                     Log.d(TAG, shiftID);
@@ -216,9 +213,9 @@ public class LandingScreen extends AppCompatActivity {
                                             .client(client)
                                             .build();
 
-                                    ApiInterface apiService2 = builder2.create(ApiInterface.class);
+                                    ApiInterface apiInterface = builder2.create(ApiInterface.class);
 
-                                    Call<String> shiftIDCall = apiService2.cancelShift(shiftID);
+                                    Call<String> shiftIDCall = apiInterface.cancelShift(shiftID);
 
                                     shiftIDCall.enqueue(new Callback<String>() {
                                         @Override
@@ -226,11 +223,34 @@ public class LandingScreen extends AppCompatActivity {
 
                                             int statusCode = response.code();
 
-                                            Log.d(TAG, Integer.toString(statusCode));
-                                            Log.d(TAG, response.raw().toString());
-
-                                            if (statusCode == 200) {
+                                            if (response.isSuccessful()) {
                                                 Toast.makeText(LandingScreen.this, "You removed your shift", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                switch (statusCode) {
+                                                    case 404:
+                                                        //404 error, server cannot find requested resource
+                                                        Toast.makeText(LandingScreen.this, "Cannot find shift.", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, statusCode + " " + response.errorBody().toString() + "Can't find shift");
+                                                        break;
+                                                    case 401:
+                                                        //401 error, token missing or invalid.
+                                                        Toast.makeText(LandingScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, statusCode + "JWT missing or invalid");
+                                                        break;
+                                                    case 403:
+                                                        //403 error, client not allowed to access this content or perform this request
+                                                        Toast.makeText(LandingScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, statusCode + "Permission denied");
+                                                        break;
+                                                    case 500:
+                                                        //500 error, server error. Bug in API
+                                                        Toast.makeText(LandingScreen.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, statusCode + "Something is wrong with the API");
+                                                        break;
+                                                    default:
+                                                        Toast.makeText(LandingScreen.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, statusCode + "Unknown error");
+                                                }
                                             }
                                         }
 
@@ -248,17 +268,40 @@ public class LandingScreen extends AppCompatActivity {
                             });
                         }
                     });
+                } else {
+                    switch (statusCode) {
+                        case 401:
+                            //401 error, token missing or invalid.
+                            Toast.makeText(LandingScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "JWT missing or invalid");
+                            break;
+                        case 500:
+                            //500 error, server error. Bug in API
+                            Toast.makeText(LandingScreen.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Something is wrong with the API");
+                            break;
+                        case 403:
+                            //403 error, does not have permission to access
+                            Toast.makeText(LandingScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Client not allowed to access this content");
+                            break;
+                        default:
+                            Toast.makeText(LandingScreen.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Unknown error");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Shift>> call, Throwable t) {
                 if (t instanceof IOException) {
-                    Log.e(TAG, "help me more", t);
+                    Toast.makeText(LandingScreen.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Internet", t);
+
+                } else {
+                    Toast.makeText(LandingScreen.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Conversion issue", t);
                 }
-
-                Log.d(TAG, t.toString());
-
             }
         });
     }
@@ -287,7 +330,6 @@ public class LandingScreen extends AppCompatActivity {
                 .client(client)
                 .build();
 
-
         ApiInterface apiInterface = build.create(ApiInterface.class);
 
         Call<CurrentUser> call = apiInterface.getCurrentUser();
@@ -297,12 +339,8 @@ public class LandingScreen extends AppCompatActivity {
             public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
 
                 int statusCode = response.code();
-                Log.d(TAG, Integer.toString(statusCode));
-                Log.d(TAG, mTOKEN);
 
-                if (statusCode == 200) {
-                    Log.d(TAG, Integer.toString(statusCode));
-
+                if (response.isSuccessful()) {
                     userType = response.body().getType();
                     userID = response.body().getId();
                     firstName = response.body().getFirstName();
@@ -310,17 +348,35 @@ public class LandingScreen extends AppCompatActivity {
                     email = response.body().getEmail();
                     phone = response.body().getPhone();
                     teamId = response.body().getTeamId();
-                    Log.e(TAG, userType);
+                } else {
+                    switch (statusCode) {
+                        case 401:
+                            //401 error, token missing or invalid.
+                            Toast.makeText(LandingScreen.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "JWT missing or invalid");
+                            break;
+                        case 500:
+                            //500 error, server error. Bug in API
+                            Toast.makeText(LandingScreen.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Something is wrong with the API");
+                            break;
+                        default:
+                            Toast.makeText(LandingScreen.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Unknown error");
+                    }
                 }
-
             }
 
             @Override
             public void onFailure(Call<CurrentUser> call, Throwable t) {
                 if (t instanceof IOException) {
-                    Log.e(TAG, "something happened", t);
+                    Toast.makeText(LandingScreen.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Internet", t);
+
+                } else {
+                    Toast.makeText(LandingScreen.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Conversion issue", t);
                 }
-                Log.d(TAG, t.toString());
             }
         });
 

@@ -31,7 +31,7 @@ public class Settings extends AppCompatActivity {
 
     public String mTOKEN;
     private String BASE_URL = "https://us-central1-vinnies-api-staging.cloudfunctions.net/api/";
-    private String TAG = "Testing";
+    private String TAG = "Settings - Error";
     private String firstName;
     private String lastName;
     private String email;
@@ -109,16 +109,9 @@ public class Settings extends AppCompatActivity {
                 });
             }
         });
-
-        //Button passwordButton = findViewById(R.id.passwordButton);
-        //passwordButton.setOnClickListener(new View.OnClickListener() {
-            //public void onClick(View v) {
-                //passwordRequest();
-            //}
-        //});
     }
 
-    public void updateDetails () {
+    public void updateDetails() {
         String fName = textFirstName.getText().toString();
         String lName = textLastName.getText().toString();
         String email = textEmail.getText().toString();
@@ -144,8 +137,6 @@ public class Settings extends AppCompatActivity {
 
         final ApiInterface apiInterface = build.create(ApiInterface.class);
 
-        //UserChange userChange = new UserChange(fName,lName,email,phone,teamID);
-
         Call<UserChange> userChangeCall = apiInterface.putUser(new UserChange(fName, lName, email, phone));
 
         userChangeCall.enqueue(new Callback<UserChange>() {
@@ -153,44 +144,43 @@ public class Settings extends AppCompatActivity {
             public void onResponse(Call<UserChange> call, Response<UserChange> response) {
                 int statusCode = response.code();
 
-                Log.d(TAG, statusCode + "");
-
-                if (statusCode == 200) {
+                if (response.isSuccessful()) {
                     Toast.makeText(Settings.this, "Details successfully changed!", Toast.LENGTH_SHORT).show();
+                } else {
+                    switch (statusCode) {
+                        case 400:
+                            //400 error, required parameters missing
+                            Toast.makeText(Settings.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + " " + response.errorBody().toString() + "Login error");
+                            break;
+                        case 401:
+                            //401 error, token missing or invalid.
+                            Toast.makeText(Settings.this, "You do not have permission to do this.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "JWT missing or invalid");
+                            break;
+                        case 500:
+                            //500 error, server error. Bug in API
+                            Toast.makeText(Settings.this, "Server error, please try again", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Something is wrong with the API");
+                            break;
+                        default:
+                            Toast.makeText(Settings.this, "Unknown error, please try again.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, statusCode + "Unknown error");
+                    }
                 }
             }
+
             @Override
             public void onFailure(Call<UserChange> call, Throwable t) {
-                Toast.makeText(Settings.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "help me more", t);
+                if (t instanceof IOException) {
+                    Toast.makeText(Settings.this, "Please check your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No Internet", t);
+
+                } else {
+                    Toast.makeText(Settings.this, "Conversion issue, please contact the developer.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Conversion issue", t);
+                }
             }
         });
     }
-
-    /*public void passwordRequest () {
-        final android.app.AlertDialog.Builder mBuilder = new AlertDialog.Builder(Settings.this);
-        View mView = getLayoutInflater().inflate(R.layout.password_confirm, null);
-        Button mReset = mView.findViewById(R.id.resetButton);
-        Button mCancel = mView.findViewById(R.id.cancelPasswordButton);
-
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.show();
-
-        mCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-
-            }
-        });
-
-        mReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }*/
-
 }
