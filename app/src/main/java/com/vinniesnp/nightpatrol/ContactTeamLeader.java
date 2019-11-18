@@ -185,10 +185,10 @@ public class ContactTeamLeader extends AppCompatActivity {
     public ShiftUsers addHelplinet() {
         ShiftUsers helplineContact = new ShiftUsers();
 
-        helplineContact.setFirstName("Helpline");
-        helplineContact.setLastName("Contacts");
-        helplineContact.setPhone("911");
-        helplineContact.setEmail("ACT@Police");
+        helplineContact.setFirstName("Police Assistance Line");
+        helplineContact.setLastName("");
+        helplineContact.setPhone("131 444");
+        helplineContact.setEmail("");
 
         return helplineContact;
     }

@@ -157,7 +157,7 @@ public class LandingScreen extends AppCompatActivity {
                 int statusCode = response.code();
                 final List<Shift> shifts_list = response.body();
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && (response.body() != null)) {
 
                     adapter = new ShiftAdapter(shifts_list);
                     recyclerView.setAdapter(adapter);
