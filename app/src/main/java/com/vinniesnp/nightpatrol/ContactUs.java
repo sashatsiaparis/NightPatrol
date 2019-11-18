@@ -16,10 +16,13 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Interceptor;
@@ -40,6 +43,7 @@ public class ContactUs extends AppCompatActivity {
     private String TAG = "ContactsVolunteer - Error";
     private String shiftID;
     public String userType;
+    public TextView textShiftTimeStandard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,8 @@ public class ContactUs extends AppCompatActivity {
                 return false;
             }
         });
+
+        textShiftTimeStandard = findViewById(R.id.textShiftTimeStandard);
 
         recyclerView = findViewById(R.id.recyclerView);
         ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -128,6 +134,18 @@ public class ContactUs extends AppCompatActivity {
                     final List<ShiftUsers> user_list = new ArrayList<ShiftUsers>();
 
                     ShiftUsers leaderContact = new ShiftUsers();
+
+                    Date date = new java.util.Date((long) response.body().getStartTime());
+                    // the format of your date
+                    SimpleDateFormat day = new java.text.SimpleDateFormat("EEEE d MMM");
+                    SimpleDateFormat time = new java.text.SimpleDateFormat("HH:mm");
+                    // give a timezone reference for formatting (see comment at the bottom)
+                    time.setTimeZone(java.util.TimeZone.getTimeZone("GMT+11"));
+                    String formattedDate = day.format(date);
+
+
+                    textShiftTimeStandard.setText("Shift: " + formattedDate);
+
 
                     leaderContact.setFirstName(response.body().getShiftLeader().getFirstName());
                     leaderContact.setLastName(response.body().getShiftLeader().getLastName());

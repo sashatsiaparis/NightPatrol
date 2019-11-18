@@ -14,6 +14,14 @@ public class ShiftDetails {
         this.id = id;
     }
 
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(float startTime) {
+        this.startTime = startTime;
+    }
+
     public ShiftLeader getShiftLeader() {
         return shiftLeader;
     }
@@ -37,6 +45,10 @@ public class ShiftDetails {
     @SerializedName("id")
     @Expose
     private String id;
+
+    @SerializedName("startTime")
+    @Expose
+    private float startTime;
 
     @SerializedName("shiftLeader")
     @Expose
