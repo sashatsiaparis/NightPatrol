@@ -9,12 +9,35 @@
     tools:layout_editor_absoluteY="56dp"
     tools:showIn="@layout/activity_landing_screen">
 
+    <ImageView
+        android:id="@+id/imageSettings"
+        android:layout_width="33dp"
+        android:layout_height="36dp"
+        android:layout_gravity="top"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintBottom_toTopOf="@+id/textGuideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shiftGuidline2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_settings" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/textGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/textGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/shiftGuideline"
@@ -35,7 +58,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="370dp" />
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/shiftGuidline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.82" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -58,7 +88,7 @@
         android:layout_marginEnd="131dp"
         android:layout_marginRight="131dp"
         android:layout_marginBottom="53dp"
-        android:contentDescription="three hands yeeting"
+        android:contentDescription="@string/vinnies_logo"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,6 +113,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.515" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

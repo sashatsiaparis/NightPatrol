@@ -4,7 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".MainActivity">
+tools:context=".LogIn">
 
     <EditText
         android:id="@+id/passwordText"
@@ -122,12 +122,14 @@ tools:context=".MainActivity">
         android:layout_width="329dp"
         android:layout_height="98dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/displayGuideline"
-        app:layout_constraintEnd_toEndOf="@+id/displayView"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/textGuidline2"
         app:layout_constraintStart_toStartOf="@+id/textGuidline"
         app:layout_constraintTop_toTopOf="@+id/displayView"
-        app:srcCompat="@mipmap/vinnies_transparent_logo" />
+        app:srcCompat="@mipmap/night_patrol_logo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
