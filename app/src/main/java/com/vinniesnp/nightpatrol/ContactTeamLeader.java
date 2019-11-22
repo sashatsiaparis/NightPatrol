@@ -16,10 +16,13 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Interceptor;
@@ -39,6 +42,7 @@ public class ContactTeamLeader extends AppCompatActivity {
     public String mTOKEN;
     private String shiftID;
     public String userType;
+    public TextView textShiftTime;
 
     private String TAG = "ContactsTeamLeader - Error";
 
@@ -52,6 +56,8 @@ public class ContactTeamLeader extends AppCompatActivity {
         mTOKEN = getIntent().getStringExtra("token");
         shiftID = getIntent().getStringExtra("id");
         userType =  getIntent().getStringExtra("type");
+
+        textShiftTime = findViewById(R.id.textShiftTime);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -121,6 +127,18 @@ public class ContactTeamLeader extends AppCompatActivity {
                 if (response.isSuccessful() && (response.body().getShiftUsers() != null)) {
                     final List<ShiftUsers> user_list = response.body().getShiftUsers();
 
+
+                    Date date = new java.util.Date((long) response.body().getStartTime());
+                    // the format of your date
+                    SimpleDateFormat day = new java.text.SimpleDateFormat("EEEE d MMM");
+                    SimpleDateFormat time = new java.text.SimpleDateFormat("HH:mm");
+                    // give a timezone reference for formatting (see comment at the bottom)
+                    time.setTimeZone(java.util.TimeZone.getTimeZone("GMT+11"));
+                    String formattedDate = day.format(date);
+
+
+                    textShiftTime.setText("Shift: " + formattedDate);
+
                     user_list.add(addVinniesContact());
                     user_list.add(addHelplinet());
 
@@ -185,10 +203,10 @@ public class ContactTeamLeader extends AppCompatActivity {
     public ShiftUsers addHelplinet() {
         ShiftUsers helplineContact = new ShiftUsers();
 
-        helplineContact.setFirstName("Helpline");
-        helplineContact.setLastName("Contacts");
-        helplineContact.setPhone("911");
-        helplineContact.setEmail("ACT@Police");
+        helplineContact.setFirstName("Police Assistance Line");
+        helplineContact.setLastName("");
+        helplineContact.setPhone("131 444");
+        helplineContact.setEmail("");
 
         return helplineContact;
     }

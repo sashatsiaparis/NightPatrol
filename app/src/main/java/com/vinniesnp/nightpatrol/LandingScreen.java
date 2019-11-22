@@ -152,12 +152,12 @@ public class LandingScreen extends AppCompatActivity {
 
         callFirst.enqueue(new Callback<List<Shift>>() {
             @Override
-            public void onResponse(final Call<List<Shift>> call, Response<List<Shift>> response) {
+            public void onResponse(final Call<List<Shift>> call, final Response<List<Shift>> response) {
 
                 int statusCode = response.code();
                 final List<Shift> shifts_list = response.body();
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && (response.body() != null)) {
 
                     adapter = new ShiftAdapter(shifts_list);
                     recyclerView.setAdapter(adapter);
